@@ -13,12 +13,12 @@ const icons = {
 
 const utilities = {
     id: 'utilities',
-    title: 'Utilities',
+    title: '관리자 기능',
     type: 'group',
     children: [
         {
             id: 'util-typography',
-            title: 'Typography',
+            title: '백신 등록',
             type: 'item',
             url: '/utils/util-typography',
             icon: icons.IconTypography,
@@ -26,41 +26,11 @@ const utilities = {
         },
         {
             id: 'util-color',
-            title: 'Color',
+            title: '부작용 신고기록 조회',
             type: 'item',
             url: '/utils/util-color',
             icon: icons.IconPalette,
             breadcrumbs: false
-        },
-        {
-            id: 'util-shadow',
-            title: 'Shadow',
-            type: 'item',
-            url: '/utils/util-shadow',
-            icon: icons.IconShadow,
-            breadcrumbs: false
-        },
-        {
-            id: 'icons',
-            title: 'Icons',
-            type: 'collapse',
-            icon: icons.IconWindmill,
-            children: [
-                {
-                    id: 'tabler-icons',
-                    title: 'Tabler Icons',
-                    type: 'item',
-                    url: '/icons/tabler-icons',
-                    breadcrumbs: false
-                },
-                {
-                    id: 'material-icons',
-                    title: 'Material Icons',
-                    type: 'item',
-                    url: '/icons/material-icons',
-                    breadcrumbs: false
-                }
-            ]
         }
     ]
 };

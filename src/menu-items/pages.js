@@ -10,32 +10,22 @@ const icons = {
 
 const pages = {
     id: 'pages',
-    title: 'Pages',
-    caption: 'Pages Caption',
+    title: '사용자 기능',
     type: 'group',
     children: [
         {
             id: 'authentication',
-            title: 'Authentication',
-            type: 'collapse',
+            title: '가게등록',
+            type: 'item',
             icon: icons.IconKey,
-
-            children: [
-                {
-                    id: 'login3',
-                    title: 'Login',
-                    type: 'item',
-                    url: '/pages/login/login3',
-                    target: true
-                },
-                {
-                    id: 'register3',
-                    title: 'Register',
-                    type: 'item',
-                    url: '/pages/register/register3',
-                    target: true
-                }
-            ]
+            breadcrumbs: false
+        },
+        {
+            id: 'authentication',
+            title: '부작용 신고',
+            type: 'item',
+            icon: icons.IconKey,
+            breadcrumbs: false
         }
     ]
 };
