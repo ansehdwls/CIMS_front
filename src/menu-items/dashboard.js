@@ -15,7 +15,7 @@ const dashboard = {
             id: 'reg_meas',
             title: '지역별 확진자 통계',
             type: 'item',
-            url: '/dashboard/reg_dia',
+            url: '/dashboard/regdia',
             icon: icons.IconDashboard,
             breadcrumbs: false
         },
@@ -23,7 +23,7 @@ const dashboard = {
             id: 'reg_vac',
             title: '지역별 백신접종자 통계',
             type: 'item',
-            url: '/dashboard/reg_vac',
+            url: '/dashboard/regvac',
             icon: icons.IconDashboard,
             breadcrumbs: false
         },
@@ -31,7 +31,7 @@ const dashboard = {
             id: 'vac_im',
             title: '백신 정보 확인',
             type: 'item',
-            url: '/dashboard/vac_im',
+            url: '/dashboard/vacim',
             icon: icons.IconDashboard,
             breadcrumbs: false
         }

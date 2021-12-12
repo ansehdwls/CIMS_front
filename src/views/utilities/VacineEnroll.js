@@ -1,120 +1,164 @@
-import { Grid, Link } from '@mui/material';
-import MuiTypography from '@mui/material/Typography';
-
-// project imports
-import SubCard from 'ui-component/cards/SubCard';
-import MainCard from 'ui-component/cards/MainCard';
-import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
+import PropTypes from 'prop-types';
+// material-ui
+import {
+    Avatar,
+    Box,
+    Card,
+    ButtonBase,
+    Grid,
+    InputAdornment,
+    Divider,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    OutlinedInput,
+    Paper,
+    Popper,
+    Button,
+    Switch,
+    Typography
+} from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { gridSpacing } from 'store/constant';
 
-// ==============================|| TYPOGRAPHY ||============================== //
+import SubCard from 'ui-component/cards/SubCard';
+import MainCard from 'ui-component/cards/MainCard';
+
+// ===============================|| COLOR BOX ||=============================== //
+
+const ColorBox = ({ bgcolor, title, data, dark }) => (
+    <>
+        <Card sx={{ mb: 3 }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    py: 4.5,
+                    bgcolor,
+                    color: dark ? 'grey.800' : '#ffffff'
+                }}
+            >
+                {title && (
+                    <Typography variant="subtitle1" color="inherit">
+                        {title}
+                    </Typography>
+                )}
+                {!title && <Box sx={{ p: 1.15 }} />}
+            </Box>
+        </Card>
+        {data && (
+            <Grid container justifyContent="space-between" alignItems="center">
+                <Grid item>
+                    <Typography variant="subtitle2">{data.label}</Typography>
+                </Grid>
+                <Grid item>
+                    <Typography variant="subtitle1" sx={{ textTransform: 'uppercase' }}>
+                        {data.color}
+                    </Typography>
+                </Grid>
+            </Grid>
+        )}
+    </>
+);
+
+ColorBox.propTypes = {
+    bgcolor: PropTypes.string,
+    title: PropTypes.string,
+    data: PropTypes.object.isRequired,
+    dark: PropTypes.bool
+};
+
+// ===============================|| UI COLOR ||=============================== //
 
 const VacineEnroll = () => (
-    <MainCard title="Basic Typography" secondary={<SecondaryAction link="https://next.material-ui.com/system/typography/" />}>
+    <MainCard title="백신 등록">
         <Grid container spacing={gridSpacing}>
-            <Grid item xs={12} sm={6}>
-                <SubCard title="Heading">
-                    <Grid container direction="column" spacing={1}>
-                        <Grid item>
-                            <MuiTypography variant="h1" gutterBottom>
-                                h1. Heading
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="h2" gutterBottom>
-                                h2. Heading
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="h3" gutterBottom>
-                                h3. Heading
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="h4" gutterBottom>
-                                h4. Heading
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="h5" gutterBottom>
-                                h5. Heading
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="h6" gutterBottom>
-                                h6. Heading
-                            </MuiTypography>
-                        </Grid>
-                    </Grid>
-                </SubCard>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <SubCard title="Sub title">
-                    <Grid container direction="column" spacing={1}>
-                        <Grid item>
-                            <MuiTypography variant="subtitle1" gutterBottom>
-                                subtitle1. Lorem ipsum dolor sit connecter adieu siccing eliot. Quos blanditiis tenetur
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="subtitle2" gutterBottom>
-                                subtitle2. Lorem ipsum dolor sit connecter adieu siccing eliot. Quos blanditiis tenetur
-                            </MuiTypography>
-                        </Grid>
-                    </Grid>
-                </SubCard>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <SubCard title="Body">
-                    <Grid container direction="column" spacing={1}>
-                        <Grid item>
-                            <MuiTypography variant="body1" gutterBottom>
-                                body1. Lorem ipsum dolor sit connecter adieu siccing eliot. Quos blanditiis tenetur unde suscipit, quam
-                                beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
-                                Eum quasi quidem quibusdam.
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="body2" gutterBottom>
-                                body2. Lorem ipsum dolor sit connecter adieu siccing eliot. Quos blanditiis tenetur unde suscipit, quam
-                                beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti?
-                                Eum quasi quidem quibusdam.
-                            </MuiTypography>
-                        </Grid>
-                    </Grid>
-                </SubCard>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <SubCard title="Extra">
-                    <Grid container direction="column" spacing={1}>
-                        <Grid item>
-                            <MuiTypography variant="button" display="block" gutterBottom>
-                                button text
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="caption" display="block" gutterBottom>
-                                caption text
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography variant="overline" display="block" gutterBottom>
-                                overline text
-                            </MuiTypography>
-                        </Grid>
-                        <Grid item>
-                            <MuiTypography
-                                variant="body2"
-                                color="primary"
-                                component={Link}
-                                href="https://berrydashboard.io"
-                                target="_blank"
-                                display="block"
-                                underline="hover"
-                                gutterBottom
+            <Grid item xs={6}>
+                <SubCard title="백신 정보">
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px',
+                                    width: '100%'
+                                }}
                             >
-                                https://berrydashboard.io
-                            </MuiTypography>
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">이름</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px'
+                                }}
+                            >
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">제조사</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px'
+                                }}
+                            >
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">권장접종횟수</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Divider />
+                        <Grid item xs={6} sm={6} md={4} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px',
+                                    marginLeft: '120px'
+                                }}
+                            >
+                                <ButtonBase sx={{ borderRadius: '8px' }}>
+                                    <Button variant="contained" size="small">
+                                        Submit
+                                    </Button>
+                                </ButtonBase>
+                            </Box>
                         </Grid>
                     </Grid>
                 </SubCard>

@@ -1,8 +1,32 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Box, Card, Grid, Typography } from '@mui/material';
-
+import {
+    Avatar,
+    Box,
+    Card,
+    ButtonBase,
+    Grid,
+    InputAdornment,
+    Divider,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    OutlinedInput,
+    Paper,
+    Popper,
+    Button,
+    Switch,
+    Typography
+} from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
+import InputLabel from '@mui/material/InputLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 // project imports
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
@@ -57,13 +81,86 @@ ColorBox.propTypes = {
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectEnroll = () => (
-    <MainCard title="가게 등록" secondary={<SecondaryAction link="https://next.material-ui.com/system/palette/" />}>
+    <MainCard title="부작용 신고">
         <Grid container spacing={gridSpacing}>
-            <Grid item xs={12}>
-                <SubCard title="가게 이름">
+            <Grid item xs={6}>
+                <SubCard title="부작용 정보">
                     <Grid container spacing={gridSpacing}>
-                        <Grid item xs={12} sm={6} md={4} lg={2}>
-                            <ColorBox bgcolor="primary.light" data={{ label: 'Blue-50', color: '#E3F2FD' }} title="primary.light" dark />
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px',
+                                    width: '100%'
+                                }}
+                            >
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">백신</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px'
+                                }}
+                            >
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">증상</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px'
+                                }}
+                            >
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">증상 후 경과시간</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Divider />
+                        <Grid item xs={6} sm={6} md={4} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px',
+                                    marginLeft: '120px'
+                                }}
+                            >
+                                <ButtonBase sx={{ borderRadius: '8px' }}>
+                                    <Button variant="contained" size="small">
+                                        Submit
+                                    </Button>
+                                </ButtonBase>
+                            </Box>
                         </Grid>
                     </Grid>
                 </SubCard>

@@ -26,31 +26,31 @@ const MainRoutes = {
             element: <DashboardDefault />
         },
         {
-            path: '/dashboard/reg_dia',
+            path: '/dashboard/regdia',
             element: <DashboardDefault />
         },
         {
-            path: '/dashboard/reg_vac',
+            path: '/dashboard/regvac',
             element: <DashboardDefault />
         },
         {
-            path: '/dashboard/vac_im',
+            path: '/dashboard/vacim',
             element: <DashboardDefault />
         },
         {
-            path: '/utils/vac_enroll',
+            path: '/utils/vacenroll',
             element: <VacineEnroll />
         },
         {
-            path: '/utils/side_effect_report',
+            path: '/utils/sideeffectreport',
             element: <SideEffectReport />
         },
         {
-            path: '/user/side_effect_enroll',
+            path: '/user/sideeffectenroll',
             element: <SideEffectEnroll />
         },
         {
-            path: '/user/shop_enroll',
+            path: '/user/shopenroll',
             element: <ShopEnroll />
         }
     ]

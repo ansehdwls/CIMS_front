@@ -17,15 +17,15 @@ const pages = {
             id: 'shop_enroll',
             title: '가게등록',
             type: 'item',
-            url: '/user/shop_enroll',
+            url: '/user/shopenroll',
             icon: icons.IconKey,
             breadcrumbs: false
         },
         {
-            id: 'side_effect_enroll',
+            id: 'sideeffectenroll',
             title: '부작용 신고',
             type: 'item',
-            url: '/user/side_effect_enroll',
+            url: '/user/sideeffectenroll',
             icon: icons.IconKey,
             breadcrumbs: false
         }
