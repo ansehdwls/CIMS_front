@@ -7,15 +7,13 @@ import Loadable from 'ui-component/Loadable';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
-// utilities routing
-const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
-const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
-const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
-const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
-const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
+// page routing
+const ShopEnroll = Loadable(lazy(() => import('views/utilities/ShopEnroll')));
+const SideEffectEnroll = Loadable(lazy(() => import('views/utilities/SideEffectEnroll')));
 
-// sample page routing
-const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+// utilities routing
+const VacineEnroll = Loadable(lazy(() => import('views/utilities/VacineEnroll')));
+const SideEffectReport = Loadable(lazy(() => import('views/utilities/SideEffectReport')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -24,36 +22,36 @@ const MainRoutes = {
     element: <MainLayout />,
     children: [
         {
-            path: '/',
+            path: '/dashboard',
             element: <DashboardDefault />
         },
         {
-            path: '/dashboard/default',
+            path: '/dashboard/reg_dia',
             element: <DashboardDefault />
         },
         {
-            path: '/utils/util-typography',
-            element: <UtilsTypography />
+            path: '/dashboard/reg_vac',
+            element: <DashboardDefault />
         },
         {
-            path: '/utils/util-color',
-            element: <UtilsColor />
+            path: '/dashboard/vac_im',
+            element: <DashboardDefault />
         },
         {
-            path: '/utils/util-shadow',
-            element: <UtilsShadow />
+            path: '/utils/vac_enroll',
+            element: <VacineEnroll />
         },
         {
-            path: '/icons/tabler-icons',
-            element: <UtilsTablerIcons />
+            path: '/utils/side_effect_report',
+            element: <SideEffectReport />
         },
         {
-            path: '/icons/material-icons',
-            element: <UtilsMaterialIcons />
+            path: '/user/side_effect_enroll',
+            element: <SideEffectEnroll />
         },
         {
-            path: '/sample-page',
-            element: <SamplePage />
+            path: '/user/shop_enroll',
+            element: <ShopEnroll />
         }
     ]
 };

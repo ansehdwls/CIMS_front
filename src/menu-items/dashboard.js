@@ -12,26 +12,26 @@ const dashboard = {
     type: 'group',
     children: [
         {
-            id: 'default',
+            id: 'reg_meas',
             title: '지역별 확진자 통계',
             type: 'item',
-            url: '/dashboard/default',
+            url: '/dashboard/reg_dia',
             icon: icons.IconDashboard,
             breadcrumbs: false
         },
         {
-            id: 'default',
+            id: 'reg_vac',
             title: '지역별 백신접종자 통계',
             type: 'item',
-            url: '/dashboard/default',
+            url: '/dashboard/reg_vac',
             icon: icons.IconDashboard,
             breadcrumbs: false
         },
         {
-            id: 'default',
+            id: 'vac_im',
             title: '백신 정보 확인',
             type: 'item',
-            url: '/dashboard/default',
+            url: '/dashboard/vac_im',
             icon: icons.IconDashboard,
             breadcrumbs: false
         }

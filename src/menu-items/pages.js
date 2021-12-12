@@ -14,16 +14,18 @@ const pages = {
     type: 'group',
     children: [
         {
-            id: 'authentication',
+            id: 'shop_enroll',
             title: '가게등록',
             type: 'item',
+            url: '/user/shop_enroll',
             icon: icons.IconKey,
             breadcrumbs: false
         },
         {
-            id: 'authentication',
+            id: 'side_effect_enroll',
             title: '부작용 신고',
             type: 'item',
+            url: '/user/side_effect_enroll',
             icon: icons.IconKey,
             breadcrumbs: false
         }

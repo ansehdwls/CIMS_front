@@ -20,7 +20,7 @@ const utilities = {
             id: 'util-typography',
             title: '백신 등록',
             type: 'item',
-            url: '/utils/util-typography',
+            url: '/utils/vac_enroll',
             icon: icons.IconTypography,
             breadcrumbs: false
         },
@@ -28,7 +28,7 @@ const utilities = {
             id: 'util-color',
             title: '부작용 신고기록 조회',
             type: 'item',
-            url: '/utils/util-color',
+            url: '/utils/side_effect_report',
             icon: icons.IconPalette,
             breadcrumbs: false
         }

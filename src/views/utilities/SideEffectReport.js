@@ -56,11 +56,11 @@ ColorBox.propTypes = {
 
 // ===============================|| UI COLOR ||=============================== //
 
-const UIColor = () => (
+const SideEffectReport = () => (
     <MainCard title="Color Palette" secondary={<SecondaryAction link="https://next.material-ui.com/system/palette/" />}>
         <Grid container spacing={gridSpacing}>
             <Grid item xs={12}>
-                <SubCard title="Primary Color">
+                <SubCard title="Vacine(name)">
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox bgcolor="primary.light" data={{ label: 'Blue-50', color: '#E3F2FD' }} title="primary.light" dark />
@@ -224,4 +224,4 @@ const UIColor = () => (
     </MainCard>
 );
 
-export default UIColor;
+export default SideEffectReport;
