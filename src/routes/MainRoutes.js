@@ -6,6 +6,10 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
+const Dashboarddiagnosis = Loadable(lazy(() => import('views/diagnosis')));
+const Dashboardvaccinate = Loadable(lazy(() => import('views/vaccinate')));
+const DashboardvaccineImf = Loadable(lazy(() => import('views/utilities/VaccineImfor')));
+const Diatraffic = Loadable(lazy(() => import('views/utilities/diatraffic')));
 
 // page routing
 const ShopEnroll = Loadable(lazy(() => import('views/utilities/ShopEnroll')));
@@ -27,15 +31,19 @@ const MainRoutes = {
         },
         {
             path: '/dashboard/regdia',
-            element: <DashboardDefault />
+            element: <Dashboarddiagnosis />
         },
         {
             path: '/dashboard/regvac',
-            element: <DashboardDefault />
+            element: <Dashboardvaccinate />
         },
         {
             path: '/dashboard/vacim',
-            element: <DashboardDefault />
+            element: <DashboardvaccineImf />
+        },
+        {
+            path: '/dashboard/diatraffic',
+            element: <Diatraffic />
         },
         {
             path: '/utils/vacenroll',

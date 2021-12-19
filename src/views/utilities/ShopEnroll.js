@@ -83,7 +83,7 @@ const ShopEnroll = () => (
     <MainCard title="가게 등록">
         <Grid container spacing={gridSpacing}>
             <Grid item xs={6}>
-                <SubCard title="가게 정보">
+                <SubCard title="가게 정보" margin="middle">
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={6} sm={6} md={10} lg={2}>
                             <Box

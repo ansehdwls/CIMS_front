@@ -34,6 +34,14 @@ const dashboard = {
             url: '/dashboard/vacim',
             icon: icons.IconDashboard,
             breadcrumbs: false
+        },
+        {
+            id: 'traffic',
+            title: '확진자 동선 조회',
+            type: 'item',
+            url: '/dashboard/diatraffic',
+            icon: icons.IconDashboard,
+            breadcrumbs: false
         }
     ]
 };

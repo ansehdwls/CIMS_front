@@ -29,7 +29,7 @@ const utilities = {
             title: '부작용 신고기록 조회',
             type: 'item',
             url: '/utils/sideeffectreport',
-            icon: icons.IconPalette,
+            icon: icons.IconTypography,
             breadcrumbs: false
         }
     ]

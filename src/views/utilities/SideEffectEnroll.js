@@ -134,7 +134,7 @@ const SideEffectEnroll = () => (
                                 }}
                             >
                                 <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">증상 후 경과시간</InputLabel>
+                                    <InputLabel htmlFor="standard-adornment-amount">접종 후 경과시간</InputLabel>
                                     <Input
                                         id="standard-adornment-amount"
                                         // value={values.amount}
