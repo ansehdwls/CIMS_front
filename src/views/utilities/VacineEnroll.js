@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 // material-ui
 import {
     Avatar,
@@ -31,260 +33,141 @@ import { gridSpacing } from 'store/constant';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 
-// ===============================|| COLOR BOX ||=============================== //
-
-const ColorBox = ({ bgcolor, title, data, dark }) => (
-    <>
-        <Card sx={{ mb: 3 }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    py: 4.5,
-                    bgcolor,
-                    color: dark ? 'grey.800' : '#ffffff'
-                }}
-            >
-                {title && (
-                    <Typography variant="subtitle1" color="inherit">
-                        {title}
-                    </Typography>
-                )}
-                {!title && <Box sx={{ p: 1.15 }} />}
-            </Box>
-        </Card>
-        {data && (
-            <Grid container justifyContent="space-between" alignItems="center">
-                <Grid item>
-                    <Typography variant="subtitle2">{data.label}</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography variant="subtitle1" sx={{ textTransform: 'uppercase' }}>
-                        {data.color}
-                    </Typography>
-                </Grid>
-            </Grid>
-        )}
-    </>
-);
-
-ColorBox.propTypes = {
-    bgcolor: PropTypes.string,
-    title: PropTypes.string,
-    data: PropTypes.object.isRequired,
-    dark: PropTypes.bool
-};
-
 // ===============================|| UI COLOR ||=============================== //
 
-const VacineEnroll = () => (
-    <MainCard title="백신 등록">
-        <Grid container spacing={gridSpacing}>
-            <Grid item xs={6}>
-                <SubCard title="백신 정보">
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px',
-                                    width: '100%'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">플랫폼</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">제조사</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">연령</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">허가일</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">권장접종횟수</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">접종량 및 접종방법</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">보관일</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">개봉 후 유효기간</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Divider />
-                        <Grid item xs={6} sm={6} md={4} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px',
-                                    marginLeft: '120px'
-                                }}
-                            >
-                                <ButtonBase sx={{ borderRadius: '8px' }}>
-                                    <Button variant="contained" size="small">
-                                        Submit
-                                    </Button>
-                                </ButtonBase>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </SubCard>
-            </Grid>
-        </Grid>
-    </MainCard>
-);
+const VacineEnroll = () => {
+    const [postVaccineValues, setpostVaccineValues] = useState({
+        VaccineName: undefined,
+        recommendVaccinationNumber: undefined,
+        manufacturer: undefined
+    });
 
+    async function handClickListner() {
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'http://192.168.0.17:5100/api/vacciness',
+                data: postVaccineValues
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const handleChange = useCallback(
+        (prop) => (event) => {
+            setpostVaccineValues({ ...postVaccineValues, [prop]: event.target.value });
+        },
+        [postVaccineValues]
+    );
+
+    return (
+        <MainCard title="백신 등록">
+            <Grid container spacing={gridSpacing}>
+                <Grid item xs={6}>
+                    <SubCard title="백신 정보">
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px',
+                                        width: '100%'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postVaccineValues.vaccineName}
+                                            onChange={handleChange('vaccineName')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">권장 접종 횟수</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postVaccineValues.recommendVaccinationNumber}
+                                            onChange={handleChange('recommendVaccinationNumber')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            // value={values.amount}
+                                            // onChange={handleChange('amount')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">제조사</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            // value={values.amount}
+                                            // onChange={handleChange('amount')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Divider />
+                            <Grid item xs={6} sm={6} md={4} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px',
+                                        marginLeft: '120px'
+                                    }}
+                                >
+                                    <ButtonBase sx={{ borderRadius: '8px' }}>
+                                        <Button variant="contained" size="small">
+                                            Submit
+                                        </Button>
+                                    </ButtonBase>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </SubCard>
+                </Grid>
+            </Grid>
+        </MainCard>
+    );
+};
 export default VacineEnroll;

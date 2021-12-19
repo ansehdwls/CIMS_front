@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // material-ui
 import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
 import { IconSearch } from '@tabler/icons';
+
 // project imports
 import * as React from 'react';
 import Table from '@mui/material/Table';

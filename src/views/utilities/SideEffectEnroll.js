@@ -1,24 +1,8 @@
 import PropTypes from 'prop-types';
-
+import axios from 'axios';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 // material-ui
-import {
-    Avatar,
-    Box,
-    Card,
-    ButtonBase,
-    Grid,
-    InputAdornment,
-    Divider,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    OutlinedInput,
-    Paper,
-    Popper,
-    Button,
-    Switch,
-    Typography
-} from '@mui/material';
+import { Avatar, Box, Card, Button, ButtonBase, Grid, InputAdornment, Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import FilledInput from '@mui/material/FilledInput';
@@ -33,140 +17,163 @@ import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import { gridSpacing } from 'store/constant';
 
-// ===============================|| COLOR BOX ||=============================== //
-
-const ColorBox = ({ bgcolor, title, data, dark }) => (
-    <>
-        <Card sx={{ mb: 3 }}>
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    py: 4.5,
-                    bgcolor,
-                    color: dark ? 'grey.800' : '#ffffff'
-                }}
-            >
-                {title && (
-                    <Typography variant="subtitle1" color="inherit">
-                        {title}
-                    </Typography>
-                )}
-                {!title && <Box sx={{ p: 1.15 }} />}
-            </Box>
-        </Card>
-        {data && (
-            <Grid container justifyContent="space-between" alignItems="center">
-                <Grid item>
-                    <Typography variant="subtitle2">{data.label}</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography variant="subtitle1" sx={{ textTransform: 'uppercase' }}>
-                        {data.color}
-                    </Typography>
-                </Grid>
-            </Grid>
-        )}
-    </>
-);
-
-ColorBox.propTypes = {
-    bgcolor: PropTypes.string,
-    title: PropTypes.string,
-    data: PropTypes.object.isRequired,
-    dark: PropTypes.bool
-};
-
 // ===============================|| UI COLOR ||=============================== //
 
-const SideEffectEnroll = () => (
-    <MainCard title="부작용 신고">
-        <Grid container spacing={gridSpacing}>
-            <Grid item xs={6}>
-                <SubCard title="부작용 정보">
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px',
-                                    width: '100%'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">백신</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
+const SideEffectEnroll = () => {
+    const [postSideEffectValues, setpostSideEffectValues] = useState({
+        vaccineName: undefined,
+        name: undefined,
+        symtomSite: undefined,
+        durationHour: undefined,
+        elpasedHour: undefined
+    });
+
+    async function handClickListner() {
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'http://192.168.0.17:5100/api/side-effects',
+                data: postSideEffectValues
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const handleChange = useCallback(
+        (prop) => (event) => {
+            setpostSideEffectValues({ ...postSideEffectValues, [prop]: event.target.value });
+        },
+        [postSideEffectValues]
+    );
+
+    return (
+        <MainCard title="부작용 신고">
+            <Grid container spacing={gridSpacing}>
+                <Grid item xs={6}>
+                    <SubCard title="부작용 정보">
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px',
+                                        width: '100%'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postSideEffectValues.vaccineName}
+                                            onChange={handleChange('vaccineName')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">증상</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">접종 후 경과시간</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
                         <Divider />
-                        <Grid item xs={6} sm={6} md={4} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px',
-                                    marginLeft: '120px'
-                                }}
-                            >
-                                <ButtonBase sx={{ borderRadius: '8px' }}>
-                                    <Button variant="contained" size="small">
-                                        Submit
-                                    </Button>
-                                </ButtonBase>
-                            </Box>
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">부작용 증상</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postSideEffectValues.name}
+                                            onChange={handleChange('name')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </SubCard>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">증상 부위</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postSideEffectValues.symtomSite}
+                                            onChange={handleChange('symtomSitet')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">발현 후 지속시간</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postSideEffectValues.durationHour}
+                                            onChange={handleChange('durationHour')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">접종 후 경과시간</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postSideEffectValues.elpasedHour}
+                                            onChange={handleChange('elpasedHour')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={gridSpacing}>
+                            <Divider />
+                            <Grid item xs={6} sm={6} md={4} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px',
+                                        marginLeft: '120px'
+                                    }}
+                                >
+                                    <ButtonBase sx={{ borderRadius: '8px' }}>
+                                        <Button variant="contained" size="small" onClick={() => handClickListner}>
+                                            Submit
+                                        </Button>
+                                    </ButtonBase>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </SubCard>
+                </Grid>
             </Grid>
-        </Grid>
-    </MainCard>
-);
+        </MainCard>
+    );
+};
 
 export default SideEffectEnroll;

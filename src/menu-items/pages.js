@@ -15,7 +15,7 @@ const pages = {
     children: [
         {
             id: 'shop_enroll',
-            title: '가게등록',
+            title: '매장 방문지 등록',
             type: 'item',
             url: '/user/shopenroll',
             icon: icons.IconKey,
@@ -23,7 +23,7 @@ const pages = {
         },
         {
             id: 'diatrafficenroll',
-            title: '확진자 동선 등록',
+            title: '확진자 등록',
             type: 'item',
             url: '/user/diatrafficenroll',
             icon: icons.IconKey,
