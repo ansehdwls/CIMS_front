@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Box, Card, Grid, Typography } from '@mui/material';
-
+import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
+import { IconSearch } from '@tabler/icons';
 // project imports
 import * as React from 'react';
 import Table from '@mui/material/Table';
+import TextField from '@mui/material/TextField';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -30,12 +31,33 @@ const rows = [
     createData('4', '김*은', '2020-12-19', '모더나', '오한', '25시간'),
     createData('5', '문*민', '2020-12-19', '모더나', '발열', '24시간')
 ];
-
+const handleToggle = () => {
+    console.log('search');
+};
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectReport = () => (
     <MainCard title="부작용 신고">
         <Grid container spacing={gridSpacing}>
+            <Box style={{ display: 'flex', align: 'right', width: '100%', justifyContent: 'space-between' }}>
+                <Box />
+                <Box>
+                    <TextField id="filled-search" display="flex" label="검색" type="search" variant="standard" />
+                    <ButtonBase>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                background: '#ffffff',
+                                color: '#bdbdbd'
+                            }}
+                            onClick={handleToggle}
+                            color="inherit"
+                        >
+                            <IconSearch stroke={1.0} size="1.3rem" />
+                        </Avatar>
+                    </ButtonBase>
+                </Box>
+            </Box>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>

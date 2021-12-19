@@ -27,10 +27,12 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { gridSpacing } from 'store/constant';
-
+// project imports
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
+import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
+import { gridSpacing } from 'store/constant';
+import diatraffic from './diatraffic';
 
 // ===============================|| COLOR BOX ||=============================== //
 
@@ -70,26 +72,39 @@ const ColorBox = ({ bgcolor, title, data, dark }) => (
     </>
 );
 
-ColorBox.propTypes = {
-    bgcolor: PropTypes.string,
-    title: PropTypes.string,
-    data: PropTypes.object.isRequired,
-    dark: PropTypes.bool
-};
-
 // ===============================|| UI COLOR ||=============================== //
 
-const ShopEnroll = () => (
-    <MainCard title="매장 등록">
+const Diatrafficenroll = () => (
+    <MainCard title="확진자 방문 등록">
         <Grid container spacing={gridSpacing}>
             <Grid item xs={6}>
-                <SubCard title="매장 정보" margin="middle">
+                <SubCard title="방문등록">
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={6} sm={6} md={10} lg={2}>
                             <Box
                                 sx={{
                                     margin: '10px',
                                     width: '100%'
+                                }}
+                            >
+                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                    <InputLabel htmlFor="standard-adornment-amount">확진 번호</InputLabel>
+                                    <Input
+                                        id="standard-adornment-amount"
+                                        // value={values.amount}
+                                        // onChange={handleChange('amount')}
+                                        startAdornment={<InputAdornment position="start" />}
+                                    />
+                                </FormControl>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid container spacing={gridSpacing}>
+                        <Grid item xs={6} sm={6} md={10} lg={2}>
+                            <Box
+                                sx={{
+                                    margin: '10px'
                                 }}
                             >
                                 <FormControl fullWidth sx={{ m: 1 }} variant="standard">
@@ -113,27 +128,7 @@ const ShopEnroll = () => (
                                 }}
                             >
                                 <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">주소</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">전화번호</InputLabel>
+                                    <InputLabel htmlFor="standard-adornment-amount">방문 날짜</InputLabel>
                                     <Input
                                         id="standard-adornment-amount"
                                         // value={values.amount}
@@ -168,4 +163,4 @@ const ShopEnroll = () => (
     </MainCard>
 );
 
-export default ShopEnroll;
+export default Diatrafficenroll;

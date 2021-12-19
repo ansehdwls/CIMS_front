@@ -14,7 +14,7 @@ const Diatraffic = Loadable(lazy(() => import('views/utilities/diatraffic')));
 // page routing
 const ShopEnroll = Loadable(lazy(() => import('views/utilities/ShopEnroll')));
 const SideEffectEnroll = Loadable(lazy(() => import('views/utilities/SideEffectEnroll')));
-
+const Diatrafficenroll = Loadable(lazy(() => import('views/utilities/Diatrafficenroll')));
 // utilities routing
 const VacineEnroll = Loadable(lazy(() => import('views/utilities/VacineEnroll')));
 const SideEffectReport = Loadable(lazy(() => import('views/utilities/SideEffectReport')));
@@ -52,6 +52,10 @@ const MainRoutes = {
         {
             path: '/utils/sideeffectreport',
             element: <SideEffectReport />
+        },
+        {
+            path: '/user/diatrafficenroll',
+            element: <Diatrafficenroll />
         },
         {
             path: '/user/sideeffectenroll',

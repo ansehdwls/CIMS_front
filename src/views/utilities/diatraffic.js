@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Box, Card, Grid, Typography } from '@mui/material';
-
+import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
+import { IconSearch } from '@tabler/icons';
 // project imports
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
@@ -31,15 +31,33 @@ const rows = [
     createData('확진자(1017)', '동구', '2020-12-19', 'a가게 - b가게 - c가게'),
     createData('확진자(1018)', '남구', '2020-12-19', 'a가게 - b가게 - c가게')
 ];
-
+const handleToggle = () => {
+    console.log('search');
+};
 // ===============================|| UI COLOR ||=============================== //
 
 const diatraffic = () => (
     <MainCard title="확진자 동선">
         <Grid container spacing={gridSpacing}>
-            <Grid item>
-                <TextField id="filled-search" label="검색" type="search" variant="standard" align="center" />
-            </Grid>
+            <Box style={{ display: 'flex', align: 'right', width: '100%', justifyContent: 'space-between' }}>
+                <Box />
+                <Box>
+                    <TextField id="filled-search" display="flex" label="검색" type="search" variant="standard" />
+                    <ButtonBase>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                background: '#ffffff',
+                                color: '#bdbdbd'
+                            }}
+                            onClick={handleToggle}
+                            color="inherit"
+                        >
+                            <IconSearch stroke={1.0} size="1.3rem" />
+                        </Avatar>
+                    </ButtonBase>
+                </Box>
+            </Box>
             <Grid item xs={12}>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">

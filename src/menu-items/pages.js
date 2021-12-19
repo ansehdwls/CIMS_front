@@ -22,6 +22,14 @@ const pages = {
             breadcrumbs: false
         },
         {
+            id: 'diatrafficenroll',
+            title: '확진자 동선 등록',
+            type: 'item',
+            url: '/user/diatrafficenroll',
+            icon: icons.IconKey,
+            breadcrumbs: false
+        },
+        {
             id: 'sideeffectenroll',
             title: '부작용 신고',
             type: 'item',
