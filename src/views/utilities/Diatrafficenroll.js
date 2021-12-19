@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-
+import axios from 'axios';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 // material-ui
 import {
     Avatar,
@@ -36,92 +37,119 @@ import diatraffic from './diatraffic';
 
 // ===============================|| UI COLOR ||=============================== //
 
-const Diatrafficenroll = () => (
-    <MainCard title="확진자 방문 등록">
-        <Grid container spacing={gridSpacing}>
-            <Grid item xs={6}>
-                <SubCard title="방문등록">
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px',
-                                    width: '100%'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">확진 번호</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
+const Diatrafficenroll = () => {
+    const [postDiaMallValues, setPostDiaMallValues] = useState({
+        coronicId: undefined,
+        placeId: undefined,
+        visitedAt: undefined
+    });
+
+    async function handClickListner() {
+        try {
+            const response = await axios({
+                method: 'post',
+                url: 'http://192.168.0.17:5100/api/coronic',
+                data: postDiaMallValues
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const handleChange = useCallback(
+        (prop) => (event) => {
+            setPostDiaMallValues({ ...postDiaMallValues, [prop]: event.target.value });
+        },
+        [postDiaMallValues]
+    );
+
+    return (
+        <MainCard title="확진자 방문 등록">
+            <Grid container spacing={gridSpacing}>
+                <Grid item xs={6}>
+                    <SubCard title="방문등록">
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px',
+                                        width: '100%'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">확진 번호</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postDiaMallValues.coronicId}
+                                            onChange={handleChange('coronicId')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">매장명</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={6} sm={6} md={10} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px'
-                                }}
-                            >
-                                <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                    <InputLabel htmlFor="standard-adornment-amount">방문 날짜</InputLabel>
-                                    <Input
-                                        id="standard-adornment-amount"
-                                        // value={values.amount}
-                                        // onChange={handleChange('amount')}
-                                        startAdornment={<InputAdornment position="start" />}
-                                    />
-                                </FormControl>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                    <Divider />
-                    <Grid container spacing={gridSpacing}>
                         <Divider />
-                        <Grid item xs={6} sm={6} md={4} lg={2}>
-                            <Box
-                                sx={{
-                                    margin: '10px',
-                                    marginLeft: '120px'
-                                }}
-                            >
-                                <ButtonBase sx={{ borderRadius: '8px' }}>
-                                    <Button variant="contained" size="small">
-                                        Submit
-                                    </Button>
-                                </ButtonBase>
-                            </Box>
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">매장명</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postDiaMallValues.placeId}
+                                            onChange={handleChange('amount')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </SubCard>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Grid item xs={6} sm={6} md={10} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px'
+                                    }}
+                                >
+                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                        <InputLabel htmlFor="standard-adornment-amount">방문 날짜</InputLabel>
+                                        <Input
+                                            id="standard-adornment-amount"
+                                            value={postDiaMallValues.visitedAt}
+                                            onChange={handleChange('visitedAt')}
+                                            startAdornment={<InputAdornment position="start" />}
+                                        />
+                                    </FormControl>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Divider />
+                        <Grid container spacing={gridSpacing}>
+                            <Divider />
+                            <Grid item xs={6} sm={6} md={4} lg={2}>
+                                <Box
+                                    sx={{
+                                        margin: '10px',
+                                        marginLeft: '120px'
+                                    }}
+                                >
+                                    <ButtonBase sx={{ borderRadius: '8px' }}>
+                                        <Button variant="contained" size="small" onClick={() => handClickListner}>
+                                            Submit
+                                        </Button>
+                                    </ButtonBase>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </SubCard>
+                </Grid>
             </Grid>
-        </Grid>
-    </MainCard>
-);
+        </MainCard>
+    );
+};
 export default Diatrafficenroll;

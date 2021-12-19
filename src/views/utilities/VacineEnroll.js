@@ -115,31 +115,11 @@ const VacineEnroll = () => {
                                     }}
                                 >
                                     <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                        <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
-                                        <Input
-                                            id="standard-adornment-amount"
-                                            // value={values.amount}
-                                            // onChange={handleChange('amount')}
-                                            startAdornment={<InputAdornment position="start" />}
-                                        />
-                                    </FormControl>
-                                </Box>
-                            </Grid>
-                        </Grid>
-                        <Divider />
-                        <Grid container spacing={gridSpacing}>
-                            <Grid item xs={6} sm={6} md={10} lg={2}>
-                                <Box
-                                    sx={{
-                                        margin: '10px'
-                                    }}
-                                >
-                                    <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                         <InputLabel htmlFor="standard-adornment-amount">제조사</InputLabel>
                                         <Input
                                             id="standard-adornment-amount"
-                                            // value={values.amount}
-                                            // onChange={handleChange('amount')}
+                                            value={postVaccineValues.manufacturer}
+                                            onChange={handleChange('manufacturer')}
                                             startAdornment={<InputAdornment position="start" />}
                                         />
                                     </FormControl>
@@ -157,7 +137,7 @@ const VacineEnroll = () => {
                                     }}
                                 >
                                     <ButtonBase sx={{ borderRadius: '8px' }}>
-                                        <Button variant="contained" size="small">
+                                        <Button variant="contained" size="small" onClick={() => handClickListner}>
                                             Submit
                                         </Button>
                                     </ButtonBase>

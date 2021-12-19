@@ -47,49 +47,10 @@ function Row(props) {
 
     return (
         <>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
-                <TableCell component="th" scope="row">
-                    {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
-                            <Table size="small" aria-label="purchases">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>접종횟수</TableCell>
-                                        <TableCell>접종량 및 방법</TableCell>
-                                        <TableCell align="right">보관</TableCell>
-                                        <TableCell align="right">개봉 후 유효기간</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
-                                            <TableCell component="th" scope="row">
-                                                {historyRow.date}
-                                            </TableCell>
-                                            <TableCell>{historyRow.customerId}</TableCell>
-                                            <TableCell align="right">{historyRow.amount}</TableCell>
-                                            <TableCell align="right">{historyRow.amount}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </Box>
-                    </Collapse>
-                </TableCell>
+                <TableCell align="center">{row.name}</TableCell>
+                <TableCell align="left">{row.fat}</TableCell>
+                <TableCell align="left">{row.calories}</TableCell>
             </TableRow>
         </>
     );
@@ -136,7 +97,7 @@ const rows = [
     createData(
         '화이자',
         '화이자 및 바이오엔텍',
-        '코미나티주',
+        '2회, 21일',
         '12세 이상',
         '21.03.05',
         '2회, 21일',
@@ -147,7 +108,7 @@ const rows = [
     createData(
         '모더나',
         '모더나코비드-19 백신주',
-        '모더나',
+        '2회, 28일',
         '18세 이상',
         '21.05.21',
         '2회, 28일',
@@ -158,7 +119,7 @@ const rows = [
     createData(
         '아스트로 제네카',
         '아스트라제네카',
-        '한국아스트라제네카코비드-19백신',
+        '2회, 8-12주',
         '18세 이상',
         '21.02.10',
         '2회, 8-12주',
@@ -169,7 +130,7 @@ const rows = [
     createData(
         '얀센',
         '얀센 Johnson&Johnson',
-        '코비드19백신얀센주',
+        '1회',
         '18세 이상',
         '21.04.07',
         '1회',
@@ -187,12 +148,9 @@ const UtilitiesShadow = () => (
                 <Table aria-label="collapsible table">
                     <TableHead>
                         <TableRow>
-                            <TableCell />
-                            <TableCell>플랫폼</TableCell>
-                            <TableCell align="right">제조사</TableCell>
-                            <TableCell align="right">백신명</TableCell>
-                            <TableCell align="right">연령</TableCell>
-                            <TableCell align="right">허가일</TableCell>
+                            <TableCell align="center">백신명</TableCell>
+                            <TableCell align="left">권장횟수</TableCell>
+                            <TableCell align="left">제조사</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
