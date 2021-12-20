@@ -2,13 +2,15 @@ import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import PropTypes from 'prop-types';
 
 function TextFormControl(props) {
-  const { sx, label, required, value, regex, ...rest } = props;
+  const { sx, label, required, value, defaultValue, readOnly, regex, ...rest } = props;
   return (
     <FormControl sx={sx} variant="outlined">
       <InputLabel>{label}</InputLabel>
       <OutlinedInput
         error={(required && !value) || (value && regex && !new RegExp(regex).test(value))}
+        readOnly={readOnly}
         value={value}
+        defaultValue={defaultValue}
         label={label}
         {...rest}
       />

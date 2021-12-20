@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
 // material-ui
-import { Box, Card, Grid } from '@mui/material';
+import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
 import axios from 'axios';
 import { Fragment, useEffect, useState, useCallback } from 'react';
 // project imports
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
+import TextField from '@mui/material/TextField';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+import { IconSearch } from '@tabler/icons';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
@@ -145,29 +145,90 @@ const rows = [
 
 const UtilitiesShadow = () => {
   const [VaccineList, setVaccineList] = useState([]);
+  const [getvaccineValue, setgetvaccineValue] = useState({
+    vaccineName: undefined
+  });
+  let Searchtrue = false;
   async function initialList() {
-    try {
-      const response = await axios({
-        method: 'get',
-        url: 'http://52.78.166.38:5100/api/vaccines?page=0',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-        }
-      });
-      console.log(response.data[0]);
-      setVaccineList(response.data[0]);
-      console.log(VaccineList);
-    } catch (e) {
-      console.log(e);
+    if (Searchtrue) {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `http://52.78.166.38:5100/api/vaccines?vaccineName=${getvaccineValue.vaccineName}&page=0`,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        });
+        console.log(response.data[0]);
+        setVaccineList(response.data[0]);
+        Searchtrue = false;
+        console.log(VaccineList);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: 'http://52.78.166.38:5100/api/vaccines?page=0',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        });
+        console.log(response.data[0]);
+        setVaccineList(response.data[0]);
+        console.log(VaccineList);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
   useEffect(() => {
     initialList();
   }, []);
+  const handleChange = useCallback(
+    (prop) => (event) => {
+      setgetvaccineValue({ ...getvaccineValue, [prop]: event.target.value });
+    },
+    [getvaccineValue]
+  );
 
+  async function handleToggle() {
+    Searchtrue = true;
+    initialList();
+  }
   return (
     <MainCard title="백신 정보 확인">
       <Grid container spacing={gridSpacing}>
+        <Box style={{ display: 'flex', align: 'right', width: '100%', justifyContent: 'space-between' }}>
+          <Box />
+          <Box>
+            <TextField
+              id="filled-search"
+              display="flex"
+              value={getvaccineValue.vaccineName}
+              onChange={handleChange('vaccineName')}
+              label="검색"
+              type="search"
+              variant="standard"
+            />
+            <ButtonBase>
+              <Avatar
+                variant="rounded"
+                sx={{
+                  background: '#ffffff',
+                  color: '#bdbdbd'
+                }}
+                onClick={() => {
+                  handleToggle();
+                }}
+                color="inherit"
+              >
+                <IconSearch stroke={1.0} size="1.3rem" />
+              </Avatar>
+            </ButtonBase>
+          </Box>
+        </Box>
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>

@@ -40,25 +40,48 @@ const SideEffectReport = () => {
   const [postSideEffectValue, setpostSideEffectValue] = useState({
     vaccineName: undefined
   });
-  const rows = [];
+  let Searchtrue = false;
   const [SideEffectList, setSideEffectList] = useState([]);
   async function initialList() {
-    try {
-      const response = await axios({
-        method: 'get',
-        url: 'http://52.78.166.38:5100/api/side-effects?page=0',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    if (Searchtrue) {
+      try {
+        console.log(postSideEffectValue.vaccineName);
+        const response = await axios({
+          method: 'get',
+          url: `http://52.78.166.38:5100/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=0`,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        });
+        console.log(response.data[0]);
+        if (response.data[0].length === 0) {
+          console.log('empty');
+          alert('결과가 없습니다');
         }
-      });
-      console.log(response.data[0]);
-      if (response.data[0].length === 0) {
-        console.log('empty');
+        setSideEffectList(response.data[0]);
+        console.log(SideEffectList);
+        Searchtrue = false;
+      } catch (e) {
+        console.log(e);
       }
-      setSideEffectList(response.data[0]);
-      console.log(SideEffectList);
-    } catch (e) {
-      console.log(e);
+    } else {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `http://52.78.166.38:5100/api/side-effects?page=0`,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+          }
+        });
+        console.log(response.data[0]);
+        if (response.data[0].length === 0) {
+          console.log('empty');
+        }
+        setSideEffectList(response.data[0]);
+        console.log(SideEffectList);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
   useEffect(() => {
@@ -72,15 +95,8 @@ const SideEffectReport = () => {
   );
 
   async function handleToggle() {
-    try {
-      const response = await axios({
-        method: 'post',
-        url: 'http://192.168.0.17:5100/api/side-effects',
-        data: postSideEffectValue
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    Searchtrue = true;
+    initialList();
   }
   return (
     <MainCard title="부작용 신고">
@@ -88,9 +104,15 @@ const SideEffectReport = () => {
         <Box style={{ display: 'flex', align: 'right', width: '100%', justifyContent: 'space-between' }}>
           <Box />
           <Box>
-            <TextField id="filled-search" display="flex" label="검색" type="search" variant="standard">
-              <Input value={postSideEffectValue.vaccineName} onChange={handleChange('vaccineName')} />
-            </TextField>
+            <TextField
+              id="filled-search"
+              display="flex"
+              value={postSideEffectValue.vaccineName}
+              onChange={handleChange('vaccineName')}
+              label="검색"
+              type="search"
+              variant="standard"
+            />
             <ButtonBase>
               <Avatar
                 variant="rounded"
@@ -98,7 +120,9 @@ const SideEffectReport = () => {
                   background: '#ffffff',
                   color: '#bdbdbd'
                 }}
-                onClick={() => handleToggle}
+                onClick={() => {
+                  handleToggle();
+                }}
                 color="inherit"
               >
                 <IconSearch stroke={1.0} size="1.3rem" />

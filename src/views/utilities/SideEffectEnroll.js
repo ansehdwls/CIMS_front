@@ -93,7 +93,6 @@ const SideEffectEnroll = () => {
             </Box>
           </Grid>
         </Grid>
-        <Divider />
         <Grid container spacing={gridSpacing} justifyContent="center">
           <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
             <Box
@@ -128,7 +127,6 @@ const SideEffectEnroll = () => {
             </Box>
           </Grid>
         </Grid>
-        <Divider />
         <Grid container spacing={gridSpacing} justifyContent="center">
           <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
             <Box
@@ -163,7 +161,6 @@ const SideEffectEnroll = () => {
             </Box>
           </Grid>
         </Grid>
-        <Divider />
         <Grid container spacing={gridSpacing} justifyContent="center">
           <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
             <Box
@@ -198,7 +195,6 @@ const SideEffectEnroll = () => {
             </Box>
           </Grid>
         </Grid>
-        <Divider />
         <Grid container spacing={gridSpacing} justifyContent="center">
           <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
             <Box
@@ -234,7 +230,6 @@ const SideEffectEnroll = () => {
           </Grid>
         </Grid>
         <Grid container spacing={gridSpacing} justifyContent="center">
-          <Divider />
           <Grid item xs={6} sm={6} md={4} lg={2} container justifyContent="center">
             <Box
               component="form"

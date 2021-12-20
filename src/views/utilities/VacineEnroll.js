@@ -108,7 +108,6 @@ const VacineEnroll = () => {
           </Box>
         </Grid>
       </Grid>
-      <Divider />
       <Grid container spacing={gridSpacing} justifyContent="center">
         <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
           <Box
@@ -144,7 +143,6 @@ const VacineEnroll = () => {
           </Box>
         </Grid>
       </Grid>
-      <Divider />
       <Grid container spacing={gridSpacing} justifyContent="center">
         <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
           <Box
@@ -179,7 +177,6 @@ const VacineEnroll = () => {
           </Box>
         </Grid>
       </Grid>
-      <Divider />
       <Grid container spacing={gridSpacing} justifyContent="center">
         <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
           <Box
