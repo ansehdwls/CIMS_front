@@ -50,11 +50,19 @@ const Diatrafficenroll = () => {
   const [value, setValue] = React.useState(new Date());
   async function handClickListner() {
     try {
+      setPostDiaMallValues({
+        visitedAt: value
+      });
+      console.log(postDiaMallValues);
       const response = await axios({
         method: 'post',
-        url: 'http://192.168.0.17:5100/api/coronic',
+        url: 'http://52.78.166.38:5100/api/corona-patients/visitants',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        },
         data: postDiaMallValues
       });
+      alert('Success');
     } catch (e) {
       console.log(e);
     }
@@ -82,14 +90,15 @@ const Diatrafficenroll = () => {
             noValidate
             autoComplete="off"
           >
-            <TextField required id="outlined" label="확진번호" defaultValue=" " background="#ffffff">
-              <Input
-                id="standard-adornment-amount"
-                value={postDiaMallValues.coronicId}
-                onChange={handleChange('coronicId')}
-                startAdornment={<InputAdornment position="start" />}
-              />
-            </TextField>
+            <TextField
+              required
+              id="outlined"
+              label="확진번호"
+              value={postDiaMallValues.coronicId}
+              onChange={handleChange('coronicId')}
+              defaultValue=" "
+              background="#ffffff"
+            />
             {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                             <InputLabel htmlFor="standard-adornment-amount">확진 번호</InputLabel>
                             <Input
@@ -116,7 +125,14 @@ const Diatrafficenroll = () => {
             noValidate
             autoComplete="off"
           >
-            <TextField required id="outlined-required" label="매장명" defaultValue=" " />
+            <TextField
+              required
+              id="outlined-required"
+              value={postDiaMallValues.placeId}
+              onChange={handleChange('placeId')}
+              label="매장명"
+              defaultValue=" "
+            />
             {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                             <InputLabel htmlFor="standard-adornment-amount">매장명</InputLabel>
                             <Input
@@ -149,9 +165,7 @@ const Diatrafficenroll = () => {
                   label="For desktop"
                   value={value}
                   minDate={new Date('2017-01-01')}
-                  onChange={(newValue) => {
-                    setValue(newValue);
-                  }}
+                  onChange={setValue}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </Stack>
@@ -180,7 +194,13 @@ const Diatrafficenroll = () => {
             }}
           >
             <ButtonBase sx={{ borderRadius: '8px' }}>
-              <Button variant="contained" size="small" onClick={() => handClickListner}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  handClickListner();
+                }}
+              >
                 Submit
               </Button>
             </ButtonBase>

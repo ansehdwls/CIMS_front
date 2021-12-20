@@ -24,7 +24,6 @@ import { gridSpacing } from 'store/constant';
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectEnroll = () => {
-  const [value, setValue] = React.useState(new Date('2018-01-01T00:00:00.000Z'));
   const [postSideEffectValues, setpostSideEffectValues] = useState({
     vaccineName: undefined,
     name: undefined,
@@ -35,11 +34,16 @@ const SideEffectEnroll = () => {
 
   async function handClickListner() {
     try {
+      console.log(postSideEffectValues);
       const response = await axios({
         method: 'post',
-        url: 'http://192.168.0.17:5100/api/side-effects',
+        url: 'http://52.78.166.38:5100/api/side-effects',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        },
         data: postSideEffectValues
       });
+      alert('Success');
     } catch (e) {
       console.log(e);
     }
@@ -68,14 +72,15 @@ const SideEffectEnroll = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField required id="outlined" label="백신명" defaultValue=" " background="#ffffff">
-                <Input
-                  id="standard-adornment-amount"
-                  value={postSideEffectValues.vaccineName}
-                  onChange={handleChange('vaccineName')}
-                  startAdornment={<InputAdornment position="start" />}
-                />
-              </TextField>
+              <TextField
+                required
+                id="outlined"
+                label="백신명"
+                value={postSideEffectValues.vaccineName}
+                onChange={handleChange('vaccineName')}
+                defaultValue=" "
+                background="#ffffff"
+              />
               {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                         <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
                                         <Input
@@ -102,14 +107,15 @@ const SideEffectEnroll = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField required id="outlined" label="부작용 증상" defaultValue=" " background="#ffffff">
-                <Input
-                  id="standard-adornment-amount"
-                  value={postSideEffectValues.name}
-                  onChange={handleChange('name')}
-                  startAdornment={<InputAdornment position="start" />}
-                />
-              </TextField>
+              <TextField
+                required
+                id="outlined"
+                label="부작용 증상"
+                value={postSideEffectValues.name}
+                onChange={handleChange('name')}
+                defaultValue=" "
+                background="#ffffff"
+              />
               {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-amount">부작용 증상</InputLabel>
                                 <Input
@@ -136,14 +142,15 @@ const SideEffectEnroll = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField required id="outlined" label="증상 부위" defaultValue=" " background="#ffffff">
-                <Input
-                  id="standard-adornment-amount"
-                  value={postSideEffectValues.symtomSite}
-                  onChange={handleChange('symtomSitet')}
-                  startAdornment={<InputAdornment position="start" />}
-                />
-              </TextField>
+              <TextField
+                required
+                id="outlined"
+                label="증상 부위"
+                value={postSideEffectValues.symtomSite}
+                onChange={handleChange('symtomSite')}
+                defaultValue=" "
+                background="#ffffff"
+              />
               {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-amount">증상 부위</InputLabel>
                                 <Input
@@ -170,11 +177,15 @@ const SideEffectEnroll = () => {
               noValidate
               autoComplete="off"
             >
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Stack spacing={3}>
-                  <DesktopTimePicker value={value} onChange={setValue} renderInput={(params) => <TextField {...params} />} />
-                </Stack>
-              </LocalizationProvider>
+              <TextField
+                required
+                id="outlined"
+                label="발현 후 지속시간"
+                value={postSideEffectValues.durationHour}
+                onChange={handleChange('durationHour')}
+                defaultValue=" "
+                background="#ffffff"
+              />
               {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-amount">발현 후 지속시간</InputLabel>
                                 <Input
@@ -201,11 +212,15 @@ const SideEffectEnroll = () => {
               noValidate
               autoComplete="off"
             >
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Stack spacing={3}>
-                  <DesktopTimePicker value={value} onChange={setValue} renderInput={(params) => <TextField {...params} />} />
-                </Stack>
-              </LocalizationProvider>
+              <TextField
+                required
+                id="outlined"
+                label="접종 후 경과시간"
+                value={postSideEffectValues.elpasedHour}
+                onChange={handleChange('elpasedHour')}
+                defaultValue=" "
+                background="#ffffff"
+              />
               {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                 <InputLabel htmlFor="standard-adornment-amount">접종 후 경과시간</InputLabel>
                                 <Input
@@ -233,7 +248,13 @@ const SideEffectEnroll = () => {
               autoComplete="off"
             >
               <ButtonBase sx={{ borderRadius: '8px' }}>
-                <Button variant="contained" size="small" onClick={() => handClickListner}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={() => {
+                    handClickListner();
+                  }}
+                >
                   Submit
                 </Button>
               </ButtonBase>

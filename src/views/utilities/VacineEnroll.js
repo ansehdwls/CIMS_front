@@ -48,11 +48,18 @@ const VacineEnroll = () => {
 
   async function handClickListner() {
     try {
+      console.log(localStorage.getItem('accessToken'));
+      console.log(postVaccineValues);
       const response = await axios({
         method: 'post',
-        url: 'http://192.168.0.17:5100/api/vacciness',
+        url: 'http://52.78.166.38:5100/api/vaccines',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        },
         data: postVaccineValues
       });
+      alert('Success');
+      console.log(postVaccineValues);
     } catch (e) {
       console.log(e);
     }
@@ -80,14 +87,15 @@ const VacineEnroll = () => {
             noValidate
             autoComplete="off"
           >
-            <TextField required id="outlined" label="백신명" defaultValue=" " background="#ffffff">
-              <Input
-                id="standard-adornment-amount"
-                value={postVaccineValues.vaccineName}
-                onChange={handleChange('vaccineName')}
-                startAdornment={<InputAdornment position="start" />}
-              />
-            </TextField>
+            <TextField
+              required
+              id="outlined"
+              label="백신명"
+              value={postVaccineValues.vaccineName}
+              onChange={handleChange('vaccineName')}
+              defaultValue=" "
+              background="#ffffff"
+            />
             {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                         <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
                                         <Input
@@ -114,14 +122,16 @@ const VacineEnroll = () => {
             noValidate
             autoComplete="off"
           >
-            <TextField required id="outlined" label="권장 접종 횟수" defaultValue=" " background="#ffffff">
-              <Input
-                id="standard-adornment-amount"
-                value={postVaccineValues.recommendVaccinationNumber}
-                onChange={handleChange('recommendVaccinationNumber')}
-                startAdornment={<InputAdornment position="start" />}
-              />
-            </TextField>
+            <TextField
+              required
+              id="outlined"
+              label="권장 접종 횟수"
+              value={postVaccineValues.recommendVaccinationNumber}
+              onChange={handleChange('recommendVaccinationNumber')}
+              startAdornment={<InputAdornment position="start" />}
+              defaultValue=" "
+              background="#ffffff"
+            />
             {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                         <InputLabel htmlFor="standard-adornment-amount">권장 접종 횟수</InputLabel>
                                         <Input
@@ -148,14 +158,15 @@ const VacineEnroll = () => {
             noValidate
             autoComplete="off"
           >
-            <TextField required id="outlined" label="권장 접종 횟수" defaultValue=" " background="#ffffff">
-              <Input
-                id="standard-adornment-amount"
-                value={postVaccineValues.recommendVaccinationNumber}
-                onChange={handleChange('recommendVaccinationNumber')}
-                startAdornment={<InputAdornment position="start" />}
-              />
-            </TextField>
+            <TextField
+              required
+              id="outlined"
+              label="제조사"
+              value={postVaccineValues.manufacturer}
+              onChange={handleChange('manufacturer')}
+              defaultValue=" "
+              background="#ffffff"
+            />
             {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                         <InputLabel htmlFor="standard-adornment-amount">제조사</InputLabel>
                                         <Input
@@ -182,7 +193,13 @@ const VacineEnroll = () => {
             autoComplete="off"
           >
             <ButtonBase sx={{ borderRadius: '8px' }}>
-              <Button variant="contained" size="small" onClick={() => handClickListner}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => {
+                  handClickListner();
+                }}
+              >
                 Submit
               </Button>
             </ButtonBase>
