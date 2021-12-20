@@ -5,8 +5,7 @@ import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
 import axios from 'axios';
 import { Fragment, useEffect, useState, useCallback } from 'react';
 // project imports
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TextField from '@mui/material/TextField';
 import TableBody from '@mui/material/TableBody';
@@ -22,7 +21,8 @@ import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import { gridSpacing } from 'store/constant';
-
+import { useNavigate } from 'react-router-dom';
+import PaginationBar from './FormController/Pagination';
 // ===============================|| SHADOW BOX ||=============================== //
 function createData(name, calories, fat, carbs, protein, date, customerId, amount, time) {
   return {
@@ -56,26 +56,6 @@ function Row(props) {
     </>
   );
 }
-const ShadowBox = ({ shadow }) => (
-  <Card sx={{ mb: 3, boxShadow: shadow }}>
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        py: 4.5,
-        bgcolor: 'primary.light',
-        color: 'grey.800'
-      }}
-    >
-      <Box sx={{ color: 'inherit' }}>boxShadow: {shadow}</Box>
-    </Box>
-  </Card>
-);
-
-ShadowBox.propTypes = {
-  shadow: PropTypes.string.isRequired
-};
 
 Row.propTypes = {
   row: PropTypes.shape({
@@ -94,56 +74,21 @@ Row.propTypes = {
     protein: PropTypes.number.isRequired
   }).isRequired
 };
-const rows = [
-  createData(
-    '화이자',
-    '화이자 및 바이오엔텍',
-    '2회, 21일',
-    '12세 이상',
-    '21.03.05',
-    '2회, 21일',
-    '희석된 백신 0.3㎖ 근육주사',
-    '-90℃∼-60℃(6개월)',
-    '희석 후 2∼25℃/6시간'
-  ),
-  createData(
-    '모더나',
-    '모더나코비드-19 백신주',
-    '2회, 28일',
-    '18세 이상',
-    '21.05.21',
-    '2회, 28일',
-    '0.5㎖ 근육주사',
-    '-25℃∼-15℃(7개월)',
-    '2∼25℃/6시간'
-  ),
-  createData(
-    '아스트로 제네카',
-    '아스트라제네카',
-    '2회, 8-12주',
-    '18세 이상',
-    '21.02.10',
-    '2회, 8-12주',
-    '0.5㎖ 근육주사',
-    '2∼8℃(6개월)',
-    '~30℃/6시간'
-  ),
-  createData(
-    '얀센',
-    '얀센 Johnson&Johnson',
-    '1회',
-    '18세 이상',
-    '21.04.07',
-    '1회',
-    '0.5㎖ 근육주사',
-    '-25℃∼-15℃(24개월)',
-    '2∼8℃ : 6시간 / 9~25℃ : 3시간'
-  )
-];
+
+const theme = createTheme();
 
 // ============================|| UTILITIES SHADOW ||============================ //
 
 const UtilitiesShadow = () => {
+  const [postCount, setPostCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const handleChangePage = useCallback(
+    (event, newPage) => {
+      if (newPage) setPage(newPage);
+    },
+    [page]
+  );
+
   const [VaccineList, setVaccineList] = useState([]);
   const [getvaccineValue, setgetvaccineValue] = useState({
     vaccineName: undefined
@@ -154,13 +99,14 @@ const UtilitiesShadow = () => {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/vaccines?vaccineName=${getvaccineValue.vaccineName}&page=0`,
+          url: `http://52.78.166.38:5100/api/vaccines?vaccineName=${getvaccineValue.vaccineName}&page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
         });
         console.log(response.data[0]);
         setVaccineList(response.data[0]);
+        setPostCount(response.data[1]);
         Searchtrue = false;
         console.log(VaccineList);
       } catch (e) {
@@ -170,13 +116,14 @@ const UtilitiesShadow = () => {
       try {
         const response = await axios({
           method: 'get',
-          url: 'http://52.78.166.38:5100/api/vaccines?page=0',
+          url: `http://52.78.166.38:5100/api/vaccines?page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
         });
         console.log(response.data[0]);
         setVaccineList(response.data[0]);
+        setPostCount(response.data[1]);
         console.log(VaccineList);
       } catch (e) {
         console.log(e);
@@ -185,7 +132,7 @@ const UtilitiesShadow = () => {
   }
   useEffect(() => {
     initialList();
-  }, []);
+  }, [page]);
   const handleChange = useCallback(
     (prop) => (event) => {
       setgetvaccineValue({ ...getvaccineValue, [prop]: event.target.value });
@@ -253,6 +200,9 @@ const UtilitiesShadow = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Grid container spacing={gridSpacing} justifyContent="center">
+          <PaginationBar page={page} itemCount={postCount} handleChangePage={handleChangePage} />
+        </Grid>
       </Grid>
     </MainCard>
   );

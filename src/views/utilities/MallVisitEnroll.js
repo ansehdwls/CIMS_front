@@ -77,6 +77,7 @@ const MallVisitEnroll = () => {
                   Authorization: `KakaoAK ${config.kakaoAk}`
                 }
               }));
+            console.log(res.data);
             return res.data?.documents;
           } catch (error) {
             alert(error.message);

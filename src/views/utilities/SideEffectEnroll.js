@@ -1,31 +1,20 @@
+/* eslint-disable consistent-return */
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
 // material-ui
 import { Avatar, Box, Card, Button, ButtonBase, Grid, InputAdornment, Divider } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
-import DesktopTimePicker from '@mui/lab/DesktopTimePicker';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import Input from '@mui/material/Input';
-import FilledInput from '@mui/material/FilledInput';
-import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+// material-ui
+import SubCard from 'ui-component/cards/SubCard';
+import MainCard from 'ui-component/cards/MainCard';
 import config from 'config';
 import TextFormControl from './FormController/TextFormControl';
 import DateFormControl from './FormController/DateFormControl';
 import AsyncSelectFormControl from './FormController/AsyncSelectFormControl';
-import moment from 'moment';
-// project imports
-import SubCard from 'ui-component/cards/SubCard';
-import MainCard from 'ui-component/cards/MainCard';
-import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import { gridSpacing } from 'store/constant';
-
+import moment from 'moment';
+import { now } from 'lodash';
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectEnroll = () => {
@@ -36,7 +25,7 @@ const SideEffectEnroll = () => {
     durationHour: undefined,
     elpasedHour: undefined
   });
-
+  let vaccine;
   async function handClickListner() {
     try {
       console.log(postSideEffectValues);
@@ -50,7 +39,7 @@ const SideEffectEnroll = () => {
       });
       alert('Success');
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
     }
   }
 
@@ -67,9 +56,10 @@ const SideEffectEnroll = () => {
         <Grid container spacing={gridSpacing} justifyContent="center">
           <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
             <AsyncSelectFormControl
-              placeholder="매장 입력하세요"
+              sx={{ m: 1, margin: '10px', width: '500%' }}
+              placeholder="백신명"
               required
-              value={postSideEffectValues.vaccineName}
+              value={vaccine}
               getOptionLabel={(e) => e.vaccineName}
               getOptionValue={(e) => e.vaccineName}
               loadOptions={async (inputValue) => {
@@ -78,14 +68,18 @@ const SideEffectEnroll = () => {
                     inputValue &&
                     (await axios({
                       method: 'get',
-                      url: `${config.kakaoKeywordUrl}?query=${inputValue}`,
+                      url: `http://52.78.166.38:5100/api/vaccines?vaccineName=${inputValue}`,
                       headers: {
-                        Authorization: `KakaoAK ${config.kakaoAk}`
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
                       }
                     }));
-                  return res.data?.documents;
+                  console.log(res.data[0][0]);
+                  if (res.data[0].length > 0) {
+                    vaccine = res.data[0][0].vaccineName;
+                    return res.data[0];
+                  }
                 } catch (error) {
-                  alert(error.message);
+                  console.log(error.message);
                 }
               }}
               onChange={(target) => {

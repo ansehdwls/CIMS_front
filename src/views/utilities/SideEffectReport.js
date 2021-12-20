@@ -20,23 +20,26 @@ import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import { gridSpacing } from 'store/constant';
 import Input from '@mui/material/Input';
+import { useNavigate } from 'react-router-dom';
+import PaginationBar from './FormController/Pagination';
 // ===============================|| COLOR BOX ||=============================== //
 
 function createData(no, name, username, calories, fat, carbs, protein) {
   return { no, name, username, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('1', '이*민', '2020-12-14', '화이자', '발열', '18시간'),
-  createData('2', '김*하', '2020-12-18', '화이자', '발열', '20시간'),
-  createData('3', '이*문', '2020-12-18', '화이자', '두통', '18시간'),
-  createData('4', '김*은', '2020-12-19', '모더나', '오한', '25시간'),
-  createData('5', '문*민', '2020-12-19', '모더나', '발열', '24시간')
-];
-
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectReport = () => {
+  const [postCount, setPostCount] = useState(0);
+  const [page, setPage] = useState(1);
+
+  const handleChangePage = useCallback(
+    (event, newPage) => {
+      if (newPage) setPage(newPage);
+    },
+    [page]
+  );
   const [postSideEffectValue, setpostSideEffectValue] = useState({
     vaccineName: undefined
   });
@@ -48,7 +51,7 @@ const SideEffectReport = () => {
         console.log(postSideEffectValue.vaccineName);
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=0`,
+          url: `http://52.78.166.38:5100/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -59,6 +62,7 @@ const SideEffectReport = () => {
           alert('결과가 없습니다');
         }
         setSideEffectList(response.data[0]);
+        setPostCount(response.data[1]);
         console.log(SideEffectList);
         Searchtrue = false;
       } catch (e) {
@@ -68,7 +72,7 @@ const SideEffectReport = () => {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/side-effects?page=0`,
+          url: `http://52.78.166.38:5100/api/side-effects?page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -78,6 +82,7 @@ const SideEffectReport = () => {
           console.log('empty');
         }
         setSideEffectList(response.data[0]);
+        setPostCount(response.data[1]);
         console.log(SideEffectList);
       } catch (e) {
         console.log(e);
@@ -86,7 +91,7 @@ const SideEffectReport = () => {
   }
   useEffect(() => {
     initialList();
-  }, []);
+  }, [page]);
   const handleChange = useCallback(
     (prop) => (event) => {
       setpostSideEffectValue({ ...postSideEffectValue, [prop]: event.target.value });
@@ -154,6 +159,9 @@ const SideEffectReport = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Grid container spacing={gridSpacing} justifyContent="center">
+          <PaginationBar page={page} itemCount={postCount} handleChangePage={handleChangePage} />
+        </Grid>
       </Grid>
     </MainCard>
   );
