@@ -13,7 +13,7 @@ const DashboardvaccineImf = Loadable(lazy(() => import('views/utilities/VaccineI
 const Diatraffic = Loadable(lazy(() => import('views/utilities/diatraffic')));
 
 // page routing
-const ShopEnroll = Loadable(lazy(() => import('views/utilities/ShopEnroll')));
+const MallVisitEnroll = Loadable(lazy(() => import('views/utilities/MallVisitEnroll')));
 const SideEffectEnroll = Loadable(lazy(() => import('views/utilities/SideEffectEnroll')));
 const Diatrafficenroll = Loadable(lazy(() => import('views/utilities/Diatrafficenroll')));
 // utilities routing
@@ -64,8 +64,8 @@ function MainRoutes(isLogin) {
         element: <SideEffectEnroll />
       },
       {
-        path: '/user/shopenroll',
-        element: <ShopEnroll />
+        path: '/user/mallvisitenroll',
+        element: <MallVisitEnroll />
       }
     ]
   };
