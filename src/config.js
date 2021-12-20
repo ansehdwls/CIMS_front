@@ -4,8 +4,10 @@ const config = {
   basename: '',
   defaultPath: '/dashboard',
   fontFamily: `'Roboto', sans-serif`,
-  borderRadius: 12,
-  productionUrl: process.env.REACT_APP_PRODUCTION_URL || 'http://localhost:5100'
+  borderRadius: '5px',
+  productionUrl: process.env.REACT_APP_PRODUCTION_URL || 'http://localhost:5100',
+  kakaoKeywordUrl: 'https://dapi.kakao.com/v2/local/search/keyword.json',
+  kakaoAk: process.env.REACT_APP_KAKAOAK
 };
 
 export default config;
