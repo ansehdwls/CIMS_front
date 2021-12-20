@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 
 // project imports
 import MainLayout from 'layout/MainLayout';
@@ -21,51 +22,53 @@ const SideEffectReport = Loadable(lazy(() => import('views/utilities/SideEffectR
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+function MainRoutes(isLogin) {
+  return {
     path: '/',
-    element: <MainLayout />,
+    element: isLogin ? <MainLayout /> : <Navigate to="/pages/login" />,
     children: [
-        {
-            path: '/dashboard',
-            element: <DashboardDefault />
-        },
-        {
-            path: '/dashboard/regdia',
-            element: <Dashboarddiagnosis />
-        },
-        {
-            path: '/dashboard/regvac',
-            element: <Dashboardvaccinate />
-        },
-        {
-            path: '/dashboard/vacim',
-            element: <DashboardvaccineImf />
-        },
-        {
-            path: '/dashboard/diatraffic',
-            element: <Diatraffic />
-        },
-        {
-            path: '/utils/vacenroll',
-            element: <VacineEnroll />
-        },
-        {
-            path: '/utils/sideeffectreport',
-            element: <SideEffectReport />
-        },
-        {
-            path: '/user/diatrafficenroll',
-            element: <Diatrafficenroll />
-        },
-        {
-            path: '/user/sideeffectenroll',
-            element: <SideEffectEnroll />
-        },
-        {
-            path: '/user/shopenroll',
-            element: <ShopEnroll />
-        }
+      {
+        path: '/dashboard',
+        element: <DashboardDefault />
+      },
+      {
+        path: '/dashboard/regdia',
+        element: <Dashboarddiagnosis />
+      },
+      {
+        path: '/dashboard/regvac',
+        element: <Dashboardvaccinate />
+      },
+      {
+        path: '/dashboard/vacim',
+        element: <DashboardvaccineImf />
+      },
+      {
+        path: '/dashboard/diatraffic',
+        element: <Diatraffic />
+      },
+      {
+        path: '/utils/vacenroll',
+        element: <VacineEnroll />
+      },
+      {
+        path: '/utils/sideeffectreport',
+        element: <SideEffectReport />
+      },
+      {
+        path: '/user/diatrafficenroll',
+        element: <Diatrafficenroll />
+      },
+      {
+        path: '/user/sideeffectenroll',
+        element: <SideEffectEnroll />
+      },
+      {
+        path: '/user/shopenroll',
+        element: <ShopEnroll />
+      }
     ]
-};
+  };
+}
 
 export default MainRoutes;
