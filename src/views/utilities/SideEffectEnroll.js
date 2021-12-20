@@ -21,11 +21,11 @@ import PaginationBar from './FormController/Pagination';
 
 const SideEffectEnroll = () => {
   const [postSideEffectValues, setpostSideEffectValues] = useState({
-    vaccineId: undefined,
+    vaccineId: Number,
     name: undefined,
-    symtomSite: undefined,
-    durationHour: undefined,
-    elpasedHour: undefined
+    symptomSite: undefined,
+    durationHour: Number,
+    elpasedHour: Number
   });
   let vaccine;
   async function handClickListner() {
@@ -163,8 +163,8 @@ const SideEffectEnroll = () => {
                 required
                 id="outlined"
                 label="증상 부위"
-                value={postSideEffectValues.symtomSite}
-                onChange={handleChange('symtomSite')}
+                value={postSideEffectValues.symptomSite}
+                onChange={handleChange('symptomSite')}
                 defaultValue=" "
                 background="#ffffff"
               />
