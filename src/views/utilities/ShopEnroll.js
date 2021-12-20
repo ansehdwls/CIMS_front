@@ -29,27 +29,30 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { gridSpacing } from 'store/constant';
-
+import { IconSearch } from '@tabler/icons';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
-
+import MenuItem from '@mui/material/MenuItem';
+import Collapse from '@mui/material/Collapse';
 // ===============================|| COLOR BOX ||=============================== //
-
-async function handClickListner() {
-  try {
-    const response = await axios({
-      method: 'post',
-      url: 'http://192.168.0.17:5100/api/vaccines',
-      data: {
-        vaccineName: 'string',
-        recommendVaccinationNumber: 0,
-        manufacturer: 'string'
-      }
-    });
-  } catch (e) {
-    console.log(e);
+const currencies = [
+  {
+    value: 'USD',
+    label: '$'
+  },
+  {
+    value: 'EUR',
+    label: '€'
+  },
+  {
+    value: 'BTC',
+    label: '฿'
+  },
+  {
+    value: 'JPY',
+    label: '¥'
   }
-}
+];
 
 // ===============================|| UI COLOR ||=============================== //
 const ShopEnroll = () => {
@@ -58,98 +61,107 @@ const ShopEnroll = () => {
     storeAddress: undefined,
     storePhoneNumver: undefined
   });
-
-  const handleChange = useCallback(
+  const [open, setOpen] = React.useState(0);
+  const [currency, setCurrency] = React.useState('EUR');
+  const [postMallName, setpostMallName] = useState({
+    MallName: undefined
+  });
+  async function callMallValue() {
+    try {
+      console.log(process.env.REACT_APP_KAKAOAK);
+      const response = await axios({
+        method: 'get',
+        url: `https://dapi.kakao.com/v2/local/search/keyword.JSON?query=${postMallName.MallName}`,
+        Authorization: `KakaoAK ${process.env.REACT_APP_KAKAOAK}`
+      });
+      console.log(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  const handleChange = (event) => {
+    setCurrency(event.target.value);
+    setOpen(open + 1);
+    console.log(currency);
+    console.log(open);
+    return (
+      <>
+        {currencies.map((option) => (
+          <Box key={option.value} value={option.value}>
+            {option.label}
+          </Box>
+        ))}
+      </>
+    );
+  };
+  const handleChange1 = useCallback(
     (prop) => (event) => {
-      setPostMallValues({ ...postMallValues, [prop]: event.target.value });
+      setpostMallName({ ...postMallName, [prop]: event.target.value });
     },
-    [postMallValues]
+    [postMallName]
   );
+  async function handClickListner() {
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'http://192.168.0.17:5100/api/vaccines',
+        data: {
+          vaccineName: 'string',
+          recommendVaccinationNumber: 0,
+          manufacturer: 'string'
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <MainCard title="매장 등록">
-      <Grid container spacing={gridSpacing}>
-        <Grid item xs={6}>
-          <SubCard title="매장 정보" margin="middle">
-            <Grid container spacing={gridSpacing}>
-              <Grid item xs={6} sm={6} md={10} lg={2}>
-                <Box
-                  sx={{
-                    margin: '10px',
-                    width: '100%'
-                  }}
-                >
-                  <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">매장명</InputLabel>
-                    <Input
-                      id="standard-adornment-amount"
-                      value={postMallValues.storeName}
-                      onChange={handleChange('storeName')}
-                      startAdornment={<InputAdornment position="start" />}
-                    />
-                  </FormControl>
-                </Box>
-              </Grid>
-            </Grid>
-            <Divider />
-            <Grid container spacing={gridSpacing}>
-              <Grid item xs={6} sm={6} md={10} lg={2}>
-                <Box
-                  sx={{
-                    margin: '10px'
-                  }}
-                >
-                  <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">주소</InputLabel>
-                    <Input
-                      id="standard-adornment-amount"
-                      value={postMallValues.storeAddress}
-                      onChange={handleChange('storeAddress')}
-                      startAdornment={<InputAdornment position="start" />}
-                    />
-                  </FormControl>
-                </Box>
-              </Grid>
-            </Grid>
-            <Divider />
-            <Grid container spacing={gridSpacing}>
-              <Grid item xs={6} sm={6} md={10} lg={2}>
-                <Box
-                  sx={{
-                    margin: '10px'
-                  }}
-                >
-                  <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                    <InputLabel htmlFor="standard-adornment-amount">전화번호</InputLabel>
-                    <Input
-                      id="standard-adornment-amount"
-                      value={postMallValues.storePhoneNumver}
-                      onChange={handleChange('storePhoneNumver')}
-                      startAdornment={<InputAdornment position="start" />}
-                    />
-                  </FormControl>
-                </Box>
-              </Grid>
-            </Grid>
-            <Divider />
-            <Grid container spacing={gridSpacing}>
-              <Divider />
-              <Grid item xs={6} sm={6} md={4} lg={2}>
-                <Box
-                  sx={{
-                    margin: '10px',
-                    marginLeft: '120px'
-                  }}
-                >
-                  <ButtonBase sx={{ borderRadius: '8px' }}>
-                    <Button variant="contained" size="small" onClick={handClickListner}>
-                      Submit
-                    </Button>
-                  </ButtonBase>
-                </Box>
-              </Grid>
-            </Grid>
-          </SubCard>
+      <Grid container spacing={gridSpacing} justifyContent="center">
+        <Grid container spacing={gridSpacing} justifyContent="center">
+          <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
+            <Box
+              sx={{
+                margin: '10px',
+                width: '50%',
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}
+            >
+              <TextField
+                id="outlined-select-currency"
+                label="outlined"
+                value={currency}
+                onChange={handleChange}
+                helperText="매장 방문지를 입력해주세요"
+              />
+              {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                                <InputLabel htmlFor="standard-adornment-amount">매장명</InputLabel>
+                                <Input 
+                                    id="standard-adornment-amount"
+                                    value={postMallName.MallName}
+                                    onChange={handleChange1('MallName')}
+                                    startAdornment={<InputAdornment position="start" />}
+                                />
+                            </FormControl> */}
+              {/* <ButtonBase>
+                                <Avatar
+                                    variant="rounded"
+                                    sx={{
+                                        background: '#ffffff',
+                                        color: '#bdbdbd'
+                                    }}
+                                    onClick={() => {
+                                        callMallValue();
+                                    }}
+                                    color="inherit"
+                                >
+                                    <IconSearch stroke={1.0} size="1.3rem" />
+                                </Avatar>
+                            </ButtonBase> */}
+            </Box>
+          </Grid>
         </Grid>
       </Grid>
     </MainCard>

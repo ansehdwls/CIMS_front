@@ -91,7 +91,7 @@ export function loginThunk(loginInfo, navigate) {
       dispatch(setLoginRequest());
       const res = await axios({
         method: 'post',
-        url: `${config.productionUrl}/api/login`,
+        url: 'http://52.78.166.38:5100/api/login',
         data: qs.stringify(loginInfo)
       });
       if (res.status >= 400) {
