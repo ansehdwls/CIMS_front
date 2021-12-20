@@ -15,11 +15,13 @@ import AsyncSelectFormControl from './FormController/AsyncSelectFormControl';
 import { gridSpacing } from 'store/constant';
 import moment from 'moment';
 import { now } from 'lodash';
+import { useNavigate } from 'react-router-dom';
+import PaginationBar from './FormController/Pagination';
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectEnroll = () => {
   const [postSideEffectValues, setpostSideEffectValues] = useState({
-    vaccineName: undefined,
+    vaccineId: undefined,
     name: undefined,
     symtomSite: undefined,
     durationHour: undefined,
@@ -86,7 +88,7 @@ const SideEffectEnroll = () => {
                 console.log(target);
                 setpostSideEffectValues({
                   ...postSideEffectValues,
-                  vaccineName: target.vaccineId
+                  vaccineId: target.vaccineId
                 });
               }}
             />

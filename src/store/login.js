@@ -100,7 +100,7 @@ export function loginThunk(loginInfo, navigate) {
       console.log(res.data);
       localStorage.setItem('accessToken', res.data.access_token);
       dispatch(setLoginSuccess(res.data));
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       dispatch(setLoginFail());
       alert(error);
