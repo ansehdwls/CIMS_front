@@ -17,6 +17,8 @@ import moment from 'moment';
 import { now } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import PaginationBar from './FormController/Pagination';
+import qs from 'qs';
+
 // ===============================|| UI COLOR ||=============================== //
 
 const SideEffectEnroll = () => {
@@ -37,7 +39,7 @@ const SideEffectEnroll = () => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
-        data: postSideEffectValues
+        data: qs.stringify(postSideEffectValues)
       });
       alert('Success');
     } catch (e) {
