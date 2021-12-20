@@ -15,6 +15,11 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import config from 'config';
+import TextFormControl from './FormController/TextFormControl';
+import DateFormControl from './FormController/DateFormControl';
+import AsyncSelectFormControl from './FormController/AsyncSelectFormControl';
+import moment from 'moment';
 // project imports
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
@@ -61,18 +66,37 @@ const SideEffectEnroll = () => {
       <Grid container spacing={gridSpacing}>
         <Grid container spacing={gridSpacing} justifyContent="center">
           <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch', color: 'white', background: '#ffffff' },
-                margin: '10px',
-                width: '200%',
-                background: '#ffffff'
+            <AsyncSelectFormControl
+              placeholder="매장 입력하세요"
+              required
+              value={postSideEffectValues.vaccineName}
+              getOptionLabel={(e) => e.vaccineName}
+              getOptionValue={(e) => e.vaccineName}
+              loadOptions={async (inputValue) => {
+                try {
+                  const res =
+                    inputValue &&
+                    (await axios({
+                      method: 'get',
+                      url: `${config.kakaoKeywordUrl}?query=${inputValue}`,
+                      headers: {
+                        Authorization: `KakaoAK ${config.kakaoAk}`
+                      }
+                    }));
+                  return res.data?.documents;
+                } catch (error) {
+                  alert(error.message);
+                }
               }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
+              onChange={(target) => {
+                console.log(target);
+                setpostSideEffectValues({
+                  ...postSideEffectValues,
+                  vaccineName: target.vaccineId
+                });
+              }}
+            />
+            {/* <TextField
                 required
                 id="outlined"
                 label="백신명"
@@ -80,8 +104,8 @@ const SideEffectEnroll = () => {
                 onChange={handleChange('vaccineName')}
                 defaultValue=" "
                 background="#ffffff"
-              />
-              {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+              /> */}
+            {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                                         <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
                                         <Input
                                             id="standard-adornment-amount"
@@ -90,7 +114,6 @@ const SideEffectEnroll = () => {
                                             startAdornment={<InputAdornment position="start" />}
                                         />
                                     </FormControl> */}
-            </Box>
           </Grid>
         </Grid>
         <Grid container spacing={gridSpacing} justifyContent="center">
