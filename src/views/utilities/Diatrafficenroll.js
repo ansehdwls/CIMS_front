@@ -40,7 +40,7 @@ const Diatrafficenroll = () => {
       console.log(postMallVisitValues);
       const response = await axios({
         method: 'post',
-        url: 'http://52.78.166.38:5100/api/corona-patients/visitants',
+        url: `${config.productionUrl}/api/corona-patients/visitants`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
@@ -59,7 +59,7 @@ const Diatrafficenroll = () => {
   // );
 
   return (
-    <SubCard title="확진자 방문" margin="middle" sx={{ height: '100%' }}>
+    <SubCard title="확진자 정보" margin="middle" sx={{ height: '100%' }}>
       <AsyncSelectFormControl
         placeholder="방문한 매장을 입력하세요"
         required

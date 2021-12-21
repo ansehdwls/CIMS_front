@@ -35,7 +35,7 @@ const SideEffectEnroll = () => {
       console.log(postSideEffectValues);
       const response = await axios({
         method: 'post',
-        url: 'http://52.78.166.38:5100/api/side-effects',
+        url: `${config.productionUrl}/api/side-effects`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
@@ -72,7 +72,7 @@ const SideEffectEnroll = () => {
                     inputValue &&
                     (await axios({
                       method: 'get',
-                      url: `http://52.78.166.38:5100/api/vaccines?vaccineName=${inputValue}`,
+                      url: `${config.productionUrl}/api/vaccines?vaccineName=${inputValue}`,
                       headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`
                       }

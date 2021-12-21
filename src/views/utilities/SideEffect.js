@@ -22,6 +22,7 @@ import { gridSpacing } from 'store/constant';
 import Input from '@mui/material/Input';
 import { useNavigate } from 'react-router-dom';
 import PaginationBar from './FormController/Pagination';
+import config from 'config';
 // ===============================|| COLOR BOX ||=============================== //
 
 function createData(no, name, username, calories, fat, carbs, protein) {
@@ -30,7 +31,7 @@ function createData(no, name, username, calories, fat, carbs, protein) {
 
 // ===============================|| UI COLOR ||=============================== //
 
-const SideEffectReport = () => {
+const SideEffect = () => {
   const [postCount, setPostCount] = useState(0);
   const [page, setPage] = useState(1);
 
@@ -51,7 +52,7 @@ const SideEffectReport = () => {
         console.log(postSideEffectValue.vaccineName);
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=${page - 1}`,
+          url: `${config.productionUrl}/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -72,7 +73,7 @@ const SideEffectReport = () => {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/side-effects?page=${page - 1}`,
+          url: `${config.productionUrl}/api/side-effects?page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -104,7 +105,7 @@ const SideEffectReport = () => {
     initialList();
   }
   return (
-    <MainCard title="부작용 신고">
+    <MainCard title="부작용">
       <Grid container spacing={gridSpacing}>
         <Box style={{ display: 'flex', align: 'right', width: '100%', justifyContent: 'space-between' }}>
           <Box />
@@ -166,4 +167,4 @@ const SideEffectReport = () => {
     </MainCard>
   );
 };
-export default SideEffectReport;
+export default SideEffect;

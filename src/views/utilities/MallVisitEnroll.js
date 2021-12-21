@@ -40,7 +40,7 @@ const MallVisitEnroll = () => {
       console.log(postMallVisitValues);
       const response = await axios({
         method: 'post',
-        url: 'http://52.78.166.38:5100/api/malls/visitants',
+        url: `${config.productionUrl}/api/malls/visitants`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
@@ -59,7 +59,7 @@ const MallVisitEnroll = () => {
   // );
 
   return (
-    <SubCard title="매장 방문 정보" margin="middle" sx={{ height: '100%' }}>
+    <SubCard title="방문지 정보" margin="middle" sx={{ height: '100%' }}>
       <AsyncSelectFormControl
         placeholder="매장 입력하세요"
         required
