@@ -1,12 +1,13 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconTypography, IconPalette, IconKey, IconShadow, IconWindmill } from '@tabler/icons';
 
 // constant
 const icons = {
   IconTypography,
   IconPalette,
   IconShadow,
-  IconWindmill
+  IconWindmill,
+  IconKey
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
@@ -21,7 +22,15 @@ const utilities = {
       title: '백신 등록',
       type: 'item',
       url: '/utils/vaccine/enroll',
-      icon: icons.IconTypography,
+      icon: icons.IconKey,
+      breadcrumbs: false
+    },
+    {
+      id: 'coronic/enroll',
+      title: '확진자 등록',
+      type: 'item',
+      url: '/utils/coronic/enroll',
+      icon: icons.IconKey,
       breadcrumbs: false
     },
     {
@@ -29,7 +38,7 @@ const utilities = {
       title: '부작용 조회',
       type: 'item',
       url: '/utils/side-effect',
-      icon: icons.IconTypography,
+      icon: icons.IconKey,
       breadcrumbs: false
     }
   ]

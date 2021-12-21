@@ -1,9 +1,9 @@
 // assets
-import { IconKey } from '@tabler/icons';
+import { IconShadow } from '@tabler/icons';
 
 // constant
 const icons = {
-  IconKey
+  IconShadow
 };
 
 // ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
@@ -18,15 +18,7 @@ const pages = {
       title: '매장 방문 등록',
       type: 'item',
       url: '/user/mall-visit/enroll',
-      icon: icons.IconKey,
-      breadcrumbs: false
-    },
-    {
-      id: 'diatrafficenroll',
-      title: '확진자 등록',
-      type: 'item',
-      url: '/user/diatrafficenroll',
-      icon: icons.IconKey,
+      icon: icons.IconShadow,
       breadcrumbs: false
     },
     {
@@ -34,7 +26,7 @@ const pages = {
       title: '부작용 신고',
       type: 'item',
       url: '/user/side-effect/enroll',
-      icon: icons.IconKey,
+      icon: icons.IconShadow,
       breadcrumbs: false
     }
   ]

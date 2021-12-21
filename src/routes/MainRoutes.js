@@ -15,7 +15,7 @@ const Coronic = Loadable(lazy(() => import('views/utilities/Coronic')));
 // page routing
 const MallVisitEnroll = Loadable(lazy(() => import('views/utilities/MallVisitEnroll')));
 const SideEffectEnroll = Loadable(lazy(() => import('views/utilities/SideEffectEnroll')));
-const Diatrafficenroll = Loadable(lazy(() => import('views/utilities/Diatrafficenroll')));
+const CoronicEnroll = Loadable(lazy(() => import('views/utilities/CoronicEnroll')));
 // utilities routing
 const VaccineEnroll = Loadable(lazy(() => import('views/utilities/VaccineEnroll')));
 const SideEffect = Loadable(lazy(() => import('views/utilities/SideEffect')));
@@ -48,6 +48,10 @@ function MainRoutes(isLogin) {
         element: <Coronic />
       },
       {
+        path: '/utils/coronic/enroll',
+        element: <CoronicEnroll />
+      },
+      {
         path: '/utils/vaccine/enroll',
         element: <VaccineEnroll />
       },
@@ -58,10 +62,6 @@ function MainRoutes(isLogin) {
       {
         path: '/user/side-effect/enroll',
         element: <SideEffectEnroll />
-      },
-      {
-        path: '/user/diatrafficenroll',
-        element: <Diatrafficenroll />
       },
       {
         path: '/user/mall-visit/enroll',
