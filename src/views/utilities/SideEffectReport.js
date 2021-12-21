@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState, useCallback } from 'react';
 // material-ui
 import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
 import { IconSearch } from '@tabler/icons';
-
+import config from 'config';
 // project imports
 import * as React from 'react';
 import Table from '@mui/material/Table';
@@ -48,7 +48,6 @@ const SideEffectReport = () => {
   async function initialList() {
     if (Searchtrue) {
       try {
-        console.log(postSideEffectValue.vaccineName);
         const response = await axios({
           method: 'get',
           url: `http://52.78.166.38:5100/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=${page - 1}`,
@@ -72,7 +71,7 @@ const SideEffectReport = () => {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/side-effects?page=${page - 1}`,
+          url: `${config.productionUrl}/api/side-effects?page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -83,9 +82,8 @@ const SideEffectReport = () => {
         }
         setSideEffectList(response.data[0]);
         setPostCount(response.data[1]);
-        console.log(SideEffectList);
       } catch (e) {
-        console.log(e);
+        console.log(e.message);
       }
     }
   }
@@ -143,6 +141,8 @@ const SideEffectReport = () => {
                 <TableCell align="left">백신명</TableCell>
                 <TableCell align="left">증상부위</TableCell>
                 <TableCell align="left">증상</TableCell>
+                <TableCell align="left">발현 후 지속시간</TableCell>
+                <TableCell align="left">접종 후 경과시간</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -150,9 +150,11 @@ const SideEffectReport = () => {
                 ? SideEffectList.map((item, index) => (
                     <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                       <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell align="left">{item.vaccine}</TableCell>
+                      <TableCell align="left">{item.vaccine ? item.vaccine : ''}</TableCell>
                       <TableCell align="left">{item.name}</TableCell>
                       <TableCell align="left">{item.symptomSite}</TableCell>
+                      <TableCell align="left">{item.durationHour}</TableCell>
+                      <TableCell align="left">{item.elapsedHour}</TableCell>
                     </TableRow>
                   ))
                 : ''}

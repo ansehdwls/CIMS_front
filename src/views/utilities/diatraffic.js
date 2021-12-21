@@ -20,6 +20,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import { gridSpacing } from 'store/constant';
 import Input from '@mui/material/Input';
+import PaginationBar from './FormController/Pagination';
 // ===============================|| COLOR BOX ||=============================== //
 
 function createData(username, regsion, diadate, store, protein) {
@@ -42,7 +43,15 @@ const diatraffic = () => {
   const [postDiaTrafficValue, setpostDiaTrafficValue] = useState({
     diatraffic: undefined
   });
+  const [postCount, setPostCount] = useState(0);
+  const [page, setPage] = useState(1);
 
+  const handleChangePage = useCallback(
+    (event, newPage) => {
+      if (newPage) setPage(newPage);
+    },
+    [page]
+  );
   async function initialList() {
     try {
       const response = await axios({
@@ -125,6 +134,9 @@ const diatraffic = () => {
               </TableBody>
             </Table>
           </TableContainer>
+          <Grid container spacing={gridSpacing} justifyContent="center">
+            <PaginationBar page={page} itemCount={postCount} handleChangePage={handleChangePage} />
+          </Grid>
         </Grid>
       </Grid>
     </MainCard>
