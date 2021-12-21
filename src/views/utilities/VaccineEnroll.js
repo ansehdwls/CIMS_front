@@ -36,10 +36,11 @@ import { gridSpacing } from 'store/constant';
 
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
+import config from 'config';
 
 // ===============================|| UI COLOR ||=============================== //
 
-const VacineEnroll = () => {
+const VaccineEnroll = () => {
   const [postVaccineValues, setpostVaccineValues] = useState({
     VaccineName: undefined,
     recommendVaccinationNumber: undefined,
@@ -52,7 +53,7 @@ const VacineEnroll = () => {
       console.log(postVaccineValues);
       const response = await axios({
         method: 'post',
-        url: 'http://52.78.166.38:5100/api/vaccines',
+        url: `${config.productionUrl}/api/vaccines`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
@@ -206,4 +207,4 @@ const VacineEnroll = () => {
     </MainCard>
   );
 };
-export default VacineEnroll;
+export default VaccineEnroll;
