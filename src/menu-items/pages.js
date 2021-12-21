@@ -14,10 +14,10 @@ const pages = {
   type: 'group',
   children: [
     {
-      id: 'mallvisitenroll',
-      title: '매장 방문지 등록',
+      id: 'mall-visit/enroll',
+      title: '방문지 등록',
       type: 'item',
-      url: '/user/mallvisitenroll',
+      url: '/user/mall-visit/enroll',
       icon: icons.IconKey,
       breadcrumbs: false
     },
@@ -30,10 +30,10 @@ const pages = {
       breadcrumbs: false
     },
     {
-      id: 'sideeffectenroll',
+      id: 'side-effect/enroll',
       title: '부작용 신고',
       type: 'item',
-      url: '/user/sideeffectenroll',
+      url: '/user/side-effect/enroll',
       icon: icons.IconKey,
       breadcrumbs: false
     }

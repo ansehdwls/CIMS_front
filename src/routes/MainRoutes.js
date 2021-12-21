@@ -7,18 +7,18 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
-const Dashboarddiagnosis = Loadable(lazy(() => import('views/diagnosis')));
-const Dashboardvaccinate = Loadable(lazy(() => import('views/vaccinate')));
-const DashboardvaccineImf = Loadable(lazy(() => import('views/utilities/VaccineImfor')));
-const Diatraffic = Loadable(lazy(() => import('views/utilities/diatraffic')));
+const DashboardDiagnosis = Loadable(lazy(() => import('views/diagnosis')));
+const DashboardVaccinate = Loadable(lazy(() => import('views/vaccinate')));
+const Vaccine = Loadable(lazy(() => import('views/utilities/Vaccine')));
+const Coronic = Loadable(lazy(() => import('views/utilities/Coronic')));
 
 // page routing
 const MallVisitEnroll = Loadable(lazy(() => import('views/utilities/MallVisitEnroll')));
 const SideEffectEnroll = Loadable(lazy(() => import('views/utilities/SideEffectEnroll')));
 const Diatrafficenroll = Loadable(lazy(() => import('views/utilities/Diatrafficenroll')));
 // utilities routing
-const VacineEnroll = Loadable(lazy(() => import('views/utilities/VacineEnroll')));
-const SideEffectReport = Loadable(lazy(() => import('views/utilities/SideEffectReport')));
+const VaccineEnroll = Loadable(lazy(() => import('views/utilities/VaccineEnroll')));
+const SideEffect = Loadable(lazy(() => import('views/utilities/SideEffect')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -33,38 +33,38 @@ function MainRoutes(isLogin) {
       },
       {
         path: '/dashboard/regdia',
-        element: <Dashboarddiagnosis />
+        element: <DashboardDiagnosis />
       },
       {
-        path: '/dashboard/regvac',
-        element: <Dashboardvaccinate />
+        path: '/dashboard/vaccinate',
+        element: <DashboardVaccinate />
       },
       {
-        path: '/dashboard/vacim',
-        element: <DashboardvaccineImf />
+        path: '/dashboard/vaccine',
+        element: <Vaccine />
       },
       {
-        path: '/dashboard/diatraffic',
-        element: <Diatraffic />
+        path: '/dashboard/coronic',
+        element: <Coronic />
       },
       {
-        path: '/utils/vacenroll',
-        element: <VacineEnroll />
+        path: '/utils/vaccine/enroll',
+        element: <VaccineEnroll />
       },
       {
-        path: '/utils/sideeffectreport',
-        element: <SideEffectReport />
+        path: '/utils/side-effect',
+        element: <SideEffect />
+      },
+      {
+        path: '/user/side-effect/enroll',
+        element: <SideEffectEnroll />
       },
       {
         path: '/user/diatrafficenroll',
         element: <Diatrafficenroll />
       },
       {
-        path: '/user/sideeffectenroll',
-        element: <SideEffectEnroll />
-      },
-      {
-        path: '/user/mallvisitenroll',
+        path: '/user/mall-visit/enroll',
         element: <MallVisitEnroll />
       }
     ]
