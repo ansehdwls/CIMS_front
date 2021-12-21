@@ -46,7 +46,6 @@ const Diatrafficenroll = () => {
         },
         data: postMallVisitValues
       });
-      alert('Success');
     } catch (e) {
       console.log(e);
     }
@@ -61,7 +60,7 @@ const Diatrafficenroll = () => {
   return (
     <SubCard title="확진자 정보" margin="middle" sx={{ height: '100%' }}>
       <AsyncSelectFormControl
-        placeholder="방문한 매장을 입력하세요"
+        placeholder="방문지 등록"
         required
         value={postMallVisitValues.placeName}
         getOptionLabel={(e) => e.place_name}

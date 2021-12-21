@@ -15,7 +15,7 @@ const pages = {
   children: [
     {
       id: 'mall-visit/enroll',
-      title: '방문지 등록',
+      title: '매장 방문 등록',
       type: 'item',
       url: '/user/mall-visit/enroll',
       icon: icons.IconKey,

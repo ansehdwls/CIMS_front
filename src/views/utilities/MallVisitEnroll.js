@@ -1,22 +1,21 @@
-/* eslint-disable consistent-return */
+/* eslint-disable react/jsx-boolean-value */
 import axios from 'axios';
-import React, { useEffect, useState, useCallback } from 'react';
-// material-ui
-import { Box, Card, Button, ButtonBase } from '@mui/material';
-import SubCard from 'ui-component/cards/SubCard';
+import { useEffect, useState, useCallback } from 'react';
+import { Box, Card, Button, ButtonBase, Breadcrumbs, Typography } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import config from 'config';
 import TextFormControl from './FormController/TextFormControl';
 import DateFormControl from './FormController/DateFormControl';
 import AsyncSelectFormControl from './FormController/AsyncSelectFormControl';
+import qs from 'qs';
 import moment from 'moment';
-import { now } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 
 // ===============================|| UI COLOR ||=============================== //
 const MallVisitEnroll = () => {
   const [postMallVisitValues, setPostMallVisitValues] = useState({
     companionNumber: undefined,
-    visitedAt: undefined,
+    visitedAt: +moment(),
     placeId: undefined,
     placeName: undefined,
     categoryName: undefined,
@@ -28,63 +27,66 @@ const MallVisitEnroll = () => {
     latitude: undefined,
     longitude: undefined
   });
+
+  const navigate = useNavigate();
+
   const handleChange = useCallback(
     (prop) => (event) => {
       setPostMallVisitValues({ ...postMallVisitValues, [prop]: event.target.value });
     },
     [postMallVisitValues]
   );
-  async function handClickListner() {
-    postMallVisitValues.visitedAt = new Date(now);
+
+  async function enrollMallVisit() {
     try {
-      console.log(postMallVisitValues);
-      const response = await axios({
+      const res = await axios({
         method: 'post',
         url: `${config.productionUrl}/api/malls/visitants`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
-        data: postMallVisitValues
+        data: qs.stringify(postMallVisitValues)
       });
-      alert('Success');
-    } catch (e) {
-      console.log(e);
+      navigate('/dashboard');
+    } catch (error) {
+      alert(error.message);
     }
   }
-  // const handleChangeDate = useCallback(
-  //   (prop) => (date) => {
-  //     setPostMallVisitValues({ ...postMallVisitValues, [prop]: moment(date).isValid() ? moment(date).valueOf() : undefined });
-  //   },
-  //   [postMallVisitValues]
-  // );
+  const handleChangeDate = useCallback(
+    (prop) => (date) => {
+      setPostMallVisitValues({ ...postMallVisitValues, [prop]: moment(date).isValid() ? moment(date).valueOf() : undefined });
+    },
+    [postMallVisitValues]
+  );
+
+  console.log(postMallVisitValues);
 
   return (
-    <SubCard title="방문지 정보" margin="middle" sx={{ height: '100%' }}>
+    <MainCard sx={{ height: '100%' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 10px', height: '53px' }}>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography fontSize="large" color="black">
+            매장 방문 등록
+          </Typography>
+        </Breadcrumbs>
+      </Box>
       <AsyncSelectFormControl
-        placeholder="매장 입력하세요"
+        placeholder="방문지"
         required
         value={postMallVisitValues.placeName}
         getOptionLabel={(e) => e.place_name}
-        getOptionValue={(e) => e.place_name}
+        getOptionValue={(e) => e.placeName}
         loadOptions={async (inputValue) => {
-          try {
-            const res =
-              inputValue &&
-              (await axios({
-                method: 'get',
-                url: `${config.kakaoKeywordUrl}?query=${inputValue}`,
-                headers: {
-                  Authorization: `KakaoAK ${config.kakaoAk}`
-                }
-              }));
-            console.log(res.data);
-            return res.data?.documents;
-          } catch (error) {
-            alert(error.message);
-          }
+          const res = await axios({
+            method: 'get',
+            url: `${config.kakaoKeywordUrl}?query=${inputValue}`,
+            headers: {
+              Authorization: `KakaoAK ${config.kakaoAk}`
+            }
+          });
+          if (res.status < 400) return res.data?.documents;
         }}
-        onChange={(target) => {
-          console.log(target);
+        onChange={(target) =>
           setPostMallVisitValues({
             ...postMallVisitValues,
             placeName: target.place_name,
@@ -97,79 +99,19 @@ const MallVisitEnroll = () => {
             roadAddressName: target.road_address_name,
             latitude: target.x,
             longitude: target.y
-          });
-        }}
+          })
+        }
       />
-      <TextFormControl
-        label="매장명"
-        defaultValue="매장명 확인"
-        readOnly="true"
-        value={postMallVisitValues.placeName}
-        onChange={handleChange('placeName')}
-      />
-      <TextFormControl
-        defaultValue="매장 분류 확인"
-        label="매장 분류"
-        readOnly="true"
-        value={postMallVisitValues.categoryName}
-        onChange={handleChange('categoryName')}
-      />
-      <TextFormControl
-        sx={{ display: 'none' }}
-        label=""
-        readOnly="true"
-        value={postMallVisitValues.placeId}
-        onChange={handleChange('placeId')}
-      />
-      <TextFormControl
-        sx={{ display: 'none' }}
-        label=""
-        readOnly="true"
-        value={postMallVisitValues.categoryGroupCode}
-        onChange={handleChange('categoryGroupCode')}
-      />
-      <TextFormControl
-        sx={{ display: 'none' }}
-        label=""
-        readOnly="true"
-        value={postMallVisitValues.categoryGroupName}
-        onChange={handleChange('categoryGroupName')}
-      />
-      <TextFormControl
-        defaultValue="매장 전화번호 확인"
-        label="매장 전화번호"
-        readOnly="true"
-        value={postMallVisitValues.phone}
-        onChange={handleChange('phone')}
-      />
-      <TextFormControl
-        defaultValue="매장 주소 확인"
-        label="매장 주소"
-        readOnly="true"
-        value={postMallVisitValues.addressName}
-        onChange={handleChange('addressName')}
-      />
-      <TextFormControl
-        sx={{ display: 'none' }}
-        label=""
-        readOnly="true"
-        value={postMallVisitValues.roadAddressName}
-        onChange={handleChange('roadAddressName')}
-      />
-      <TextFormControl
-        sx={{ display: 'none' }}
-        label=""
-        readOnly="true"
-        value={postMallVisitValues.latitude}
-        onChange={handleChange('latitude')}
-      />
-      <TextFormControl
-        sx={{ display: 'none' }}
-        label=""
-        readOnly="true"
-        value={postMallVisitValues.longitude}
-        onChange={handleChange('longitude')}
-      />
+      {postMallVisitValues.placeName && <TextFormControl label="장소명" readOnly={true} defaultValue={postMallVisitValues.placeName} />}
+      {postMallVisitValues.categoryName && <TextFormControl label="분류" readOnly={true} defaultValue={postMallVisitValues.categoryName} />}
+      {postMallVisitValues.phone && <TextFormControl label="전화번호" readOnly={true} defaultValue={postMallVisitValues.phone} />}
+      {postMallVisitValues.addressName && (
+        <TextFormControl label="지번 주소" readOnly={true} defaultValue={postMallVisitValues.addressName} />
+      )}
+      {postMallVisitValues.roadAddressName && (
+        <TextFormControl label="도로명 주소" readOnly={true} defaultValue={postMallVisitValues.roadAddressName} />
+      )}
+      <DateFormControl label="방문일시" value={postMallVisitValues.visitedAt} onChange={handleChangeDate('visitedAt')} />
       <Box
         component="form"
         sx={{
@@ -185,15 +127,14 @@ const MallVisitEnroll = () => {
             variant="contained"
             size="small"
             onClick={() => {
-              handClickListner();
+              enrollMallVisit();
             }}
           >
-            Submit
+            등록
           </Button>
         </ButtonBase>
       </Box>
-      {/* <DateFormControl label="구매일자" value={postMallVisitValues.placeId} onChange={handleChangeDate('placeId')} /> */}
-    </SubCard>
+    </MainCard>
   );
 };
 
