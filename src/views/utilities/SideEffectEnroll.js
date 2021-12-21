@@ -15,7 +15,7 @@ const SideEffectEnroll = () => {
     name: undefined,
     symptomSite: undefined,
     durationHour: undefined,
-    elpasedHour: undefined
+    elapsedHour: undefined
   });
   const navigate = useNavigate();
 
@@ -77,7 +77,7 @@ const SideEffectEnroll = () => {
       <TextFormControl label="부작용 증상" value={postSideEffectValues.name} onChange={handleChange('name')} />
       <TextFormControl label="발현부위" value={postSideEffectValues.symptomSite} onChange={handleChange('symptomSite')} />
       <TextFormControl label="발현 지속시간(hour)" value={postSideEffectValues.durationHour} onChange={handleChange('durationHour')} />
-      <TextFormControl label="접종후 경과시간(hour)" value={postSideEffectValues.elpasedHour} onChange={handleChange('elpasedHour')} />
+      <TextFormControl label="접종후 경과시간(hour)" value={postSideEffectValues.elapsedHour} onChange={handleChange('elapsedHour')} />
       <Box
         component="form"
         sx={{

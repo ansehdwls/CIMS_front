@@ -117,10 +117,10 @@ const SideEffect = () => {
                   <TableCell component="th" align="right" scope="row" width={200}>
                     {v.name}
                   </TableCell>
+                  <TableCell align="right">{v?.vaccine?.vaccineName}</TableCell>
                   <TableCell align="right">{v?.symptomSite}</TableCell>
                   <TableCell align="right">{v?.durationHour}</TableCell>
                   <TableCell align="right">{v?.elapsedHour}</TableCell>
-                  <TableCell align="right">{v?.vaccine?.vaccineName}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
