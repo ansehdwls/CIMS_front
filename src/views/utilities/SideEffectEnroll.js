@@ -1,39 +1,27 @@
-/* eslint-disable consistent-return */
-import PropTypes from 'prop-types';
 import axios from 'axios';
-import React, { Fragment, useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 // material-ui
-import { Avatar, Box, Card, Button, ButtonBase, Grid, InputAdornment, Divider } from '@mui/material';
-import TextField from '@mui/material/TextField';
-// material-ui
-import SubCard from 'ui-component/cards/SubCard';
+import { Box, Button, ButtonBase, Breadcrumbs, Typography } from '@mui/material';
 import MainCard from 'ui-component/cards/MainCard';
 import config from 'config';
 import TextFormControl from './FormController/TextFormControl';
-import DateFormControl from './FormController/DateFormControl';
 import AsyncSelectFormControl from './FormController/AsyncSelectFormControl';
-import { gridSpacing } from 'store/constant';
-import moment from 'moment';
-import { now } from 'lodash';
 import { useNavigate } from 'react-router-dom';
-import PaginationBar from './FormController/Pagination';
 import qs from 'qs';
 
-// ===============================|| UI COLOR ||=============================== //
-
 const SideEffectEnroll = () => {
-  const [postSideEffectValues, setpostSideEffectValues] = useState({
-    vaccineId: Number,
+  const [postSideEffectValues, setPostSideEffectValues] = useState({
+    vaccineId: undefined,
     name: undefined,
     symptomSite: undefined,
-    durationHour: Number,
-    elpasedHour: Number
+    durationHour: undefined,
+    elpasedHour: undefined
   });
-  let vaccine;
-  async function handClickListner() {
+  const navigate = useNavigate();
+
+  async function enrollSideEffect() {
     try {
-      console.log(postSideEffectValues);
-      const response = await axios({
+      await axios({
         method: 'post',
         url: `${config.productionUrl}/api/side-effects`,
         headers: {
@@ -41,243 +29,71 @@ const SideEffectEnroll = () => {
         },
         data: qs.stringify(postSideEffectValues)
       });
-      alert('Success');
+      navigate('/dashboard');
     } catch (e) {
-      console.log(e.message);
+      console.log(e);
     }
   }
 
   const handleChange = useCallback(
     (prop) => (event) => {
-      setpostSideEffectValues({ ...postSideEffectValues, [prop]: event.target.value });
+      setPostSideEffectValues({ ...postSideEffectValues, [prop]: event.target.value });
     },
     [postSideEffectValues]
   );
 
   return (
-    <MainCard title="부작용 신고">
-      <Grid container spacing={gridSpacing}>
-        <Grid container spacing={gridSpacing} justifyContent="center">
-          <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
-            <AsyncSelectFormControl
-              sx={{ m: 1, margin: '10px', width: '500%' }}
-              placeholder="백신명"
-              required
-              value={vaccine}
-              getOptionLabel={(e) => e.vaccineName}
-              getOptionValue={(e) => e.vaccineName}
-              loadOptions={async (inputValue) => {
-                try {
-                  const res =
-                    inputValue &&
-                    (await axios({
-                      method: 'get',
-                      url: `${config.productionUrl}/api/vaccines?vaccineName=${inputValue}`,
-                      headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
-                      }
-                    }));
-                  console.log(res.data[0][0]);
-                  if (res.data[0].length > 0) {
-                    vaccine = res.data[0][0].vaccineName;
-                    return res.data[0];
-                  }
-                } catch (error) {
-                  console.log(error.message);
-                }
-              }}
-              onChange={(target) => {
-                console.log(target);
-                setpostSideEffectValues({
-                  ...postSideEffectValues,
-                  vaccineId: target.vaccineId
-                });
-              }}
-            />
-            {/* <TextField
-                required
-                id="outlined"
-                label="백신명"
-                value={postSideEffectValues.vaccineName}
-                onChange={handleChange('vaccineName')}
-                defaultValue=" "
-                background="#ffffff"
-              /> */}
-            {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                        <InputLabel htmlFor="standard-adornment-amount">백신명</InputLabel>
-                                        <Input
-                                            id="standard-adornment-amount"
-                                            value={postSideEffectValues.vaccineName}
-                                            onChange={handleChange('vaccineName')}
-                                            startAdornment={<InputAdornment position="start" />}
-                                        />
-                                    </FormControl> */}
-          </Grid>
-        </Grid>
-        <Grid container spacing={gridSpacing} justifyContent="center">
-          <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch', color: 'white', background: '#ffffff' },
-                margin: '10px',
-                width: '200%',
-                background: '#ffffff'
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                required
-                id="outlined"
-                label="부작용 증상"
-                value={postSideEffectValues.name}
-                onChange={handleChange('name')}
-                defaultValue=" "
-                background="#ffffff"
-              />
-              {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                <InputLabel htmlFor="standard-adornment-amount">부작용 증상</InputLabel>
-                                <Input
-                                    id="standard-adornment-amount"
-                                    value={postSideEffectValues.name}
-                                    onChange={handleChange('name')}
-                                    startAdornment={<InputAdornment position="start" />}
-                                />
-                            </FormControl> */}
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container spacing={gridSpacing} justifyContent="center">
-          <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch', color: 'white', background: '#ffffff' },
-                margin: '10px',
-                width: '200%',
-                background: '#ffffff'
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                required
-                id="outlined"
-                label="증상 부위"
-                value={postSideEffectValues.symptomSite}
-                onChange={handleChange('symptomSite')}
-                defaultValue=" "
-                background="#ffffff"
-              />
-              {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                <InputLabel htmlFor="standard-adornment-amount">증상 부위</InputLabel>
-                                <Input
-                                    id="standard-adornment-amount"
-                                    value={postSideEffectValues.symtomSite}
-                                    onChange={handleChange('symtomSitet')}
-                                    startAdornment={<InputAdornment position="start" />}
-                                />
-                            </FormControl> */}
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container spacing={gridSpacing} justifyContent="center">
-          <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch', color: 'white', background: '#ffffff' },
-                margin: '10px',
-                width: '200%',
-                background: '#ffffff'
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                required
-                id="outlined"
-                label="발현 후 지속시간"
-                value={postSideEffectValues.durationHour}
-                onChange={handleChange('durationHour')}
-                defaultValue=" "
-                background="#ffffff"
-              />
-              {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                <InputLabel htmlFor="standard-adornment-amount">발현 후 지속시간</InputLabel>
-                                <Input
-                                    id="standard-adornment-amount"
-                                    value={postSideEffectValues.durationHour}
-                                    onChange={handleChange('durationHour')}
-                                    startAdornment={<InputAdornment position="start" />}
-                                />
-                            </FormControl> */}
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container spacing={gridSpacing} justifyContent="center">
-          <Grid item xs={6} sm={6} md={10} lg={2} container justifyContent="center">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch', color: 'white', background: '#ffffff' },
-                margin: '10px',
-                width: '200%',
-                background: '#ffffff'
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                required
-                id="outlined"
-                label="접종 후 경과시간"
-                value={postSideEffectValues.elpasedHour}
-                onChange={handleChange('elpasedHour')}
-                defaultValue=" "
-                background="#ffffff"
-              />
-              {/* <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-                                <InputLabel htmlFor="standard-adornment-amount">접종 후 경과시간</InputLabel>
-                                <Input
-                                    id="standard-adornment-amount"
-                                    value={postSideEffectValues.elpasedHour}
-                                    onChange={handleChange('elpasedHour')}
-                                    startAdornment={<InputAdornment position="start" />}
-                                />
-                            </FormControl> */}
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid container spacing={gridSpacing} justifyContent="center">
-          <Grid item xs={6} sm={6} md={4} lg={2} container justifyContent="center">
-            <Box
-              component="form"
-              sx={{
-                '& .MuiTextField-root': { m: 1, width: '35ch', color: 'white', background: '#ffffff' },
-                margin: '10px',
-                width: '30%',
-                background: '#ffffff'
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <ButtonBase sx={{ borderRadius: '8px' }}>
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    handClickListner();
-                  }}
-                >
-                  Submit
-                </Button>
-              </ButtonBase>
-            </Box>
-          </Grid>
-        </Grid>
-      </Grid>
+    <MainCard sx={{ height: '100%' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', margin: '0 10px', height: '53px' }}>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography fontSize="large" color="black">
+            부작용 신고
+          </Typography>
+        </Breadcrumbs>
+      </Box>
+      <AsyncSelectFormControl
+        placeholder="백신"
+        required
+        value={postSideEffectValues.vaccineName}
+        getOptionLabel={(e) => e.vaccineName}
+        getOptionValue={(e) => e.vaccineName}
+        loadOptions={async (inputValue) => {
+          const res = await axios({
+            method: 'get',
+            url: `${config.productionUrl}/api/vaccines?vaccineName=${inputValue}`,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+          });
+          if (res.status < 400) return res.data[0];
+        }}
+        onChange={(target) =>
+          setPostSideEffectValues({
+            ...postSideEffectValues,
+            vaccineId: target.vaccineId
+          })
+        }
+      />
+      <TextFormControl label="부작용 증상" value={postSideEffectValues.name} onChange={handleChange('name')} />
+      <TextFormControl label="발현부위" value={postSideEffectValues.symptomSite} onChange={handleChange('symptomSite')} />
+      <TextFormControl label="발현 지속시간(hour)" value={postSideEffectValues.durationHour} onChange={handleChange('durationHour')} />
+      <TextFormControl label="접종후 경과시간(hour)" value={postSideEffectValues.elpasedHour} onChange={handleChange('elpasedHour')} />
+      <Box
+        component="form"
+        sx={{
+          margin: '10px',
+          width: '100%',
+          textAlign: 'center'
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <ButtonBase sx={{ borderRadius: '8px' }}>
+          <Button variant="contained" size="small" onClick={() => enrollSideEffect()}>
+            등록
+          </Button>
+        </ButtonBase>
+      </Box>
     </MainCard>
   );
 };

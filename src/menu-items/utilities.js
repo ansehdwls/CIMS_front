@@ -34,7 +34,7 @@ const utilities = {
       breadcrumbs: false
     },
     {
-      id: 'util-color',
+      id: 'side-effect',
       title: '부작용 조회',
       type: 'item',
       url: '/utils/side-effect',
