@@ -1,38 +1,47 @@
 // assets
-import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconTypography, IconPalette, IconKey, IconShadow, IconWindmill } from '@tabler/icons';
 
 // constant
 const icons = {
-    IconTypography,
-    IconPalette,
-    IconShadow,
-    IconWindmill
+  IconTypography,
+  IconPalette,
+  IconShadow,
+  IconWindmill,
+  IconKey
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
 
 const utilities = {
-    id: 'utilities',
-    title: '관리자 기능',
-    type: 'group',
-    children: [
-        {
-            id: 'util-typography',
-            title: '백신 등록',
-            type: 'item',
-            url: '/utils/vacenroll',
-            icon: icons.IconTypography,
-            breadcrumbs: false
-        },
-        {
-            id: 'util-color',
-            title: '부작용 신고기록 조회',
-            type: 'item',
-            url: '/utils/sideeffectreport',
-            icon: icons.IconTypography,
-            breadcrumbs: false
-        }
-    ]
+  id: 'utilities',
+  title: '관리자 기능',
+  type: 'group',
+  children: [
+    {
+      id: 'util-typography',
+      title: '백신 등록',
+      type: 'item',
+      url: '/utils/vaccine/enroll',
+      icon: icons.IconKey,
+      breadcrumbs: false
+    },
+    {
+      id: 'coronic/enroll',
+      title: '확진자 등록',
+      type: 'item',
+      url: '/utils/coronic/enroll',
+      icon: icons.IconKey,
+      breadcrumbs: false
+    },
+    {
+      id: 'util-color',
+      title: '부작용 조회',
+      type: 'item',
+      url: '/utils/side-effect',
+      icon: icons.IconKey,
+      breadcrumbs: false
+    }
+  ]
 };
 
 export default utilities;

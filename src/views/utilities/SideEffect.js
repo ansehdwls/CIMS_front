@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
-import * as React from 'react';
-// material-ui
-import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
 import axios from 'axios';
 import { Fragment, useEffect, useState, useCallback } from 'react';
+// material-ui
+import { Box, Card, Grid, Typography, Avatar, ButtonBase } from '@mui/material';
+import { IconSearch } from '@tabler/icons';
+import config from 'config';
 // project imports
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react';
 import Table from '@mui/material/Table';
 import TextField from '@mui/material/TextField';
 import TableBody from '@mui/material/TableBody';
@@ -14,101 +15,56 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { IconSearch } from '@tabler/icons';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
 import { gridSpacing } from 'store/constant';
+import Input from '@mui/material/Input';
 import { useNavigate } from 'react-router-dom';
 import PaginationBar from './FormController/Pagination';
-// ===============================|| SHADOW BOX ||=============================== //
-function createData(name, calories, fat, carbs, protein, date, customerId, amount, time) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    history: [
-      {
-        date,
-        customerId,
-        amount,
-        time
-      }
-    ]
-  };
+import config from 'config';
+// ===============================|| COLOR BOX ||=============================== //
+
+function createData(no, name, username, calories, fat, carbs, protein) {
+  return { no, name, username, calories, fat, carbs, protein };
 }
 
-function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
+// ===============================|| UI COLOR ||=============================== //
 
-  return (
-    <>
-      <TableRow>
-        <TableCell align="center">{row.name}</TableCell>
-        <TableCell align="left">{row.fat}</TableCell>
-        <TableCell align="left">{row.calories}</TableCell>
-      </TableRow>
-    </>
-  );
-}
-
-Row.propTypes = {
-  row: PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbs: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        amount: PropTypes.number.isRequired,
-        customerId: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired
-      })
-    ).isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    protein: PropTypes.number.isRequired
-  }).isRequired
-};
-
-const theme = createTheme();
-
-// ============================|| UTILITIES SHADOW ||============================ //
-
-const UtilitiesShadow = () => {
+const SideEffect = () => {
   const [postCount, setPostCount] = useState(0);
   const [page, setPage] = useState(1);
+
   const handleChangePage = useCallback(
     (event, newPage) => {
       if (newPage) setPage(newPage);
     },
     [page]
   );
-
-  const [VaccineList, setVaccineList] = useState([]);
-  const [getvaccineValue, setgetvaccineValue] = useState({
+  const [postSideEffectValue, setpostSideEffectValue] = useState({
     vaccineName: undefined
   });
   let Searchtrue = false;
+  const [SideEffectList, setSideEffectList] = useState([]);
   async function initialList() {
     if (Searchtrue) {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/vaccines?vaccineName=${getvaccineValue.vaccineName}&page=${page - 1}`,
+          url: `${config.productionUrl}/api/side-effects?vaccineName=${postSideEffectValue.vaccineName}&page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
         });
         console.log(response.data[0]);
-        setVaccineList(response.data[0]);
+        if (response.data[0].length === 0) {
+          console.log('empty');
+          alert('결과가 없습니다');
+        }
+        setSideEffectList(response.data[0]);
         setPostCount(response.data[1]);
+        console.log(SideEffectList);
         Searchtrue = false;
-        console.log(VaccineList);
       } catch (e) {
         console.log(e);
       }
@@ -116,17 +72,19 @@ const UtilitiesShadow = () => {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://52.78.166.38:5100/api/vaccines?page=${page - 1}`,
+          url: `${config.productionUrl}/api/side-effects?page=${page - 1}`,
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
           }
         });
         console.log(response.data[0]);
-        setVaccineList(response.data[0]);
+        if (response.data[0].length === 0) {
+          console.log('empty');
+        }
+        setSideEffectList(response.data[0]);
         setPostCount(response.data[1]);
-        console.log(VaccineList);
       } catch (e) {
-        console.log(e);
+        console.log(e.message);
       }
     }
   }
@@ -135,9 +93,9 @@ const UtilitiesShadow = () => {
   }, [page]);
   const handleChange = useCallback(
     (prop) => (event) => {
-      setgetvaccineValue({ ...getvaccineValue, [prop]: event.target.value });
+      setpostSideEffectValue({ ...postSideEffectValue, [prop]: event.target.value });
     },
-    [getvaccineValue]
+    [postSideEffectValue]
   );
 
   async function handleToggle() {
@@ -145,7 +103,7 @@ const UtilitiesShadow = () => {
     initialList();
   }
   return (
-    <MainCard title="백신 정보 확인">
+    <MainCard title="부작용">
       <Grid container spacing={gridSpacing}>
         <Box style={{ display: 'flex', align: 'right', width: '100%', justifyContent: 'space-between' }}>
           <Box />
@@ -153,7 +111,7 @@ const UtilitiesShadow = () => {
             <TextField
               id="filled-search"
               display="flex"
-              value={getvaccineValue.vaccineName}
+              value={postSideEffectValue.vaccineName}
               onChange={handleChange('vaccineName')}
               label="검색"
               type="search"
@@ -177,23 +135,27 @@ const UtilitiesShadow = () => {
           </Box>
         </Box>
         <TableContainer component={Paper}>
-          <Table aria-label="collapsible table">
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">No.</TableCell>
+                <TableCell align="center">NO.</TableCell>
                 <TableCell align="left">백신명</TableCell>
-                <TableCell align="left">권장횟수</TableCell>
-                <TableCell align="left">제조사</TableCell>
+                <TableCell align="left">증상부위</TableCell>
+                <TableCell align="left">증상</TableCell>
+                <TableCell align="left">발현 후 지속시간</TableCell>
+                <TableCell align="left">접종 후 경과시간</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {VaccineList
-                ? VaccineList.map((item, index) => (
-                    <TableRow key={index}>
+              {SideEffectList
+                ? SideEffectList.map((item, index) => (
+                    <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                       <TableCell align="center">{index + 1}</TableCell>
-                      <TableCell align="left">{item.vaccineName}</TableCell>
-                      <TableCell align="left">{item.recommendVaccinationNumber}</TableCell>
-                      <TableCell align="left">{item.manufacturer}</TableCell>
+                      <TableCell align="left">{item.vaccine ? item.vaccine : ''}</TableCell>
+                      <TableCell align="left">{item.name}</TableCell>
+                      <TableCell align="left">{item.symptomSite}</TableCell>
+                      <TableCell align="left">{item.durationHour}</TableCell>
+                      <TableCell align="left">{item.elapsedHour}</TableCell>
                     </TableRow>
                   ))
                 : ''}
@@ -207,4 +169,4 @@ const UtilitiesShadow = () => {
     </MainCard>
   );
 };
-export default UtilitiesShadow;
+export default SideEffect;
